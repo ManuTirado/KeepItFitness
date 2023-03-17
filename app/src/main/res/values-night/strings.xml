@@ -4,4 +4,6 @@
     <string name="login__password_hint">Contraseña</string>
     <string name="login__password_recovery_header">¿OLVIDASTE TU CONTRASEÑA?</string>
     <string name="login__signup_button">Registrarme</string>
+    <string name="login__password_recovery_button">Recuperar Contraseña</string>
+    <string name="login__signup_header">Registrarse</string>
 </resources>

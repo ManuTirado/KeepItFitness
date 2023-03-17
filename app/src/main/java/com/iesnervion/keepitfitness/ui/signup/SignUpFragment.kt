@@ -1,4 +1,4 @@
-package com.iesnervion.keepitfitness.ui.login
+package com.iesnervion.keepitfitness.ui.signup
 
 import android.os.Bundle
 import android.util.Log
@@ -8,51 +8,56 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.iesnervion.keepitfitness.R
-import com.iesnervion.keepitfitness.databinding.FragmentLoginBinding
+import com.iesnervion.keepitfitness.databinding.FragmentSignUpBinding
 import com.iesnervion.keepitfitness.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
-    private var _binding: FragmentLoginBinding? = null
+class SignUpFragment : Fragment() {
+
+    private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: SignUpViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        _binding = FragmentSignUpBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.i("Navigation", "ViewCreated -> LoginFragment")
+        Log.i("Navigation", "ViewCreated -> SignUpFragment")
         initObservers()
         initListeners()
     }
 
     private fun initObservers() {
-        viewModel.loginState.observe(viewLifecycleOwner) { state ->
+        viewModel.signUpState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is Resource.Success -> {
-                    handleLoading(isLoading = false)
-                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-                }
-                is Resource.Error -> {
-                    handleLoading(isLoading = false)
+                    handleLoading(false)
+                    activity?.onBackPressedDispatcher?.onBackPressed()
                     Toast.makeText(
                         requireContext(),
-                        state.message,
+                        "Sign up Success",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                is Resource.Loading -> handleLoading(isLoading = true)
+                is Resource.Error -> {
+                    handleLoading(false)
+                    Toast.makeText(
+                        requireContext(),
+                        "Sign up Error: ${state.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is Resource.Loading -> handleLoading(true)
                 else -> Unit
             }
         }
@@ -60,28 +65,32 @@ class LoginFragment : Fragment() {
 
     private fun initListeners() {
         with(binding) {
-            bLogin.setOnClickListener { handleLogin() }
-            bSignUp.setOnClickListener { findNavController().navigate(R.id.action_loginFragment_to_signUpFragment) }
+            bSignUp.setOnClickListener {
+                handleSignUp()
+            }
+            bBack.setOnClickListener {
+                activity?.onBackPressedDispatcher?.onBackPressed()
+            }
         }
     }
 
-    private fun handleLogin() {
+    private fun handleSignUp() {
         val email = binding.etEmail.text.toString()
         val password = binding.etPassword.text.toString()
 
-        viewModel.login(email, password)
+        viewModel.signUp(email, password)
     }
 
     private fun handleLoading(isLoading: Boolean) {
         with(binding) {
             if (isLoading) {
-                bLogin.text = ""
-                bLogin.isEnabled = false
-                pbLogin.visibility = View.VISIBLE
+                bSignUp.text = ""
+                bSignUp.isEnabled = false
+                pbSignUp.visibility = View.VISIBLE
             } else {
-                pbLogin.visibility = View.GONE
-                bLogin.text = getString(R.string.login__login_button)
-                bLogin.isEnabled = true
+                pbSignUp.visibility = View.GONE
+                bSignUp.text=getString(R.string.login__signup_button)
+                bSignUp.isEnabled = true
             }
         }
     }
