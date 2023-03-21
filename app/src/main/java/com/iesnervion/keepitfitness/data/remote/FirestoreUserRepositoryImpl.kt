@@ -52,5 +52,4 @@ class FirestoreUserRepositoryImpl @Inject constructor(
             User()
         }
     }
-
 }

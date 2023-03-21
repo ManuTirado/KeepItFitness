@@ -8,7 +8,7 @@
         android:id="@+id/loginFragment"
         android:name="com.iesnervion.keepitfitness.ui.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
@@ -35,8 +35,8 @@
 
         <argument
             android:name="uid"
-            app:nullable="false"
-            app:argType="string"/>
+            app:argType="string"
+            app:nullable="false" />
     </fragment>
     <fragment
         android:id="@+id/passwordRecoveryFragment"
@@ -47,5 +47,6 @@
         android:id="@+id/homeActivity"
         android:name="com.iesnervion.keepitfitness.ui.home.HomeActivity"
         android:label="activity_home"
-        tools:layout="@layout/activity_home" />
+        tools:layout="@layout/activity_home"/>
+
 </navigation>

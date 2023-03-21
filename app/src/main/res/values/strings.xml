@@ -12,4 +12,7 @@
     <string name="navigation_home__entrenar_title">Entrenar</string>
     <string name="navigation_home__entrenamientos_title">Entrenamientos</string>
     <string name="navigation_home__progreso_title">Progreso</string>
+    <string name="home__user_configuration_header">CONFIGURACIÓN</string>
+    <string name="home__username_hint">Nombre de usuario</string>
+    <string name="home__save_changes_button">Guardar</string>
 </resources>

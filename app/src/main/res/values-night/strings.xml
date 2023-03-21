@@ -8,4 +8,7 @@
     <string name="login__signup_header">Registrarse</string>
     <string name="navigation_home__entrenar_title">Entrenar</string>
     <string name="navigation_home__entrenamientos_title">Entrenamientos</string>
+    <string name="home__user_configuration_header">Configuración</string>
+    <string name="home__username_hint">Nombre de usuario</string>
+    <string name="home__save_changes_button">Guardar</string>
 </resources>

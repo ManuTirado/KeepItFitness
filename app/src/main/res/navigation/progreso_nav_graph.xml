@@ -9,5 +9,14 @@
         android:id="@+id/progresoFragment"
         android:name="com.iesnervion.keepitfitness.ui.progreso.ProgresoFragment"
         android:label="fragment_progreso"
-        tools:layout="@layout/fragment_progreso" />
+        tools:layout="@layout/fragment_progreso">
+        <action
+            android:id="@+id/action_to_userConfigurationActivity"
+            app:destination="@id/userConfigurationActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/userConfigurationActivity"
+        android:name="com.iesnervion.keepitfitness.ui.configuration.UserConfigurationActivity"
+        android:label="activity_user_configuration"
+        tools:layout="@layout/activity_user_configuration" />
 </navigation>

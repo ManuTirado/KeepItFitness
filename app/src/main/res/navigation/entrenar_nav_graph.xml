@@ -9,5 +9,14 @@
         android:id="@+id/entrenarFragment"
         android:name="com.iesnervion.keepitfitness.ui.entrenar.EntrenarFragment"
         android:label="fragment_entrenar"
-        tools:layout="@layout/fragment_entrenar" />
+        tools:layout="@layout/fragment_entrenar" >
+        <action
+            android:id="@+id/action_to_userConfigurationActivity"
+            app:destination="@id/userConfigurationActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/userConfigurationActivity"
+        android:name="com.iesnervion.keepitfitness.ui.configuration.UserConfigurationActivity"
+        android:label="activity_user_configuration"
+        tools:layout="@layout/activity_user_configuration" />
 </navigation>

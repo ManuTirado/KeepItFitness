@@ -6,6 +6,8 @@ package com.iesnervion.keepitfitness.domain.model
  * @param email User email
  */
 data class User(
-    val uid: String = "",
-    val email: String = ""
+    var uid: String = "",
+    val email: String = "",
+    val username: String = "",
+    val photo: String = ""
 )

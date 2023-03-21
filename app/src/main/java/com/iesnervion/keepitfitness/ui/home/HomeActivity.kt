@@ -5,8 +5,10 @@ import android.os.Bundle
 import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.bumptech.glide.Glide
 import com.iesnervion.keepitfitness.R
 import com.iesnervion.keepitfitness.databinding.ActivityHomeBinding
+import com.iesnervion.keepitfitness.ui.login.LoginFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,5 +45,12 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         }
+
+        // Prueba
+        binding.headerLayout.setOnClickListener {
+            navController?.navigate(R.id.action_to_userConfigurationActivity)
+        }
+
+        Glide.with(this).load("https://goo.gl/gEgYUd").into(binding.ivUserPhoto)
     }
 }

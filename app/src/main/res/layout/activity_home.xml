@@ -6,19 +6,78 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="10dp"
+        android:paddingVertical="10dp"
+
+        android:background="#FF52A3"
+
+        app:layout_constraintBottom_toTopOf="@id/fHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivUserPhoto"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/ic_logo"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="nombreUsuario"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+
+            app:layout_constraintStart_toEndOf="@+id/ivUserPhoto"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tvUserEmail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            />
+        <TextView
+            android:id="@+id/tvUserEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="prueba@gmail.com"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+
+            app:layout_constraintStart_toEndOf="@+id/ivUserPhoto"
+            app:layout_constraintTop_toBottomOf="@id/tvUserName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fHome"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
 
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        app:navGraph="@navigation/home_nav_graph"
         app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
 
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerLayout"
+        app:navGraph="@navigation/home_nav_graph"
+
+        tools:layout="@layout/fragment_entrenar" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
