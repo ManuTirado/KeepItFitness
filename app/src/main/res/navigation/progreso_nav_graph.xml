@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/progreso_nav_graph"
+    app:startDestination="@id/progresoFragment">
+
+    <fragment
+        android:id="@+id/progresoFragment"
+        android:name="com.iesnervion.keepitfitness.ui.progreso.ProgresoFragment"
+        android:label="fragment_progreso"
+        tools:layout="@layout/fragment_progreso" />
+</navigation>

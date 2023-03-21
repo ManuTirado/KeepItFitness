@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/entrenar_nav_graph"
+    app:startDestination="@id/entrenarFragment">
+
+    <fragment
+        android:id="@+id/entrenarFragment"
+        android:name="com.iesnervion.keepitfitness.ui.entrenar.EntrenarFragment"
+        android:label="fragment_entrenar"
+        tools:layout="@layout/fragment_entrenar" />
+</navigation>

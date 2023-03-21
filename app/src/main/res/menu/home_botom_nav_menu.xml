@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/entrenar_nav_graph"
+        android:icon="@drawable/ic_dumbbell"
+        android:title="@string/navigation_home__entrenar_title" />
+    <item
+        android:id="@+id/entrenamientos_nav_graph"
+        android:icon="@drawable/ic_list"
+        android:title="@string/navigation_home__entrenamientos_title" />
+    <item
+        android:id="@+id/progreso_nav_graph"
+        android:icon="@drawable/ic_graph"
+        android:title="@string/navigation_home__progreso_title" />
+</menu>

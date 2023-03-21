@@ -9,4 +9,7 @@
     <string name="login__signup_button">Registrarme</string>
     <string name="login__password_recovery_button">Recuperar Contraseña</string>
     <string name="login__signup_header">Registrarse</string>
+    <string name="navigation_home__entrenar_title">Entrenar</string>
+    <string name="navigation_home__entrenamientos_title">Entrenamientos</string>
+    <string name="navigation_home__progreso_title">Progreso</string>
 </resources>

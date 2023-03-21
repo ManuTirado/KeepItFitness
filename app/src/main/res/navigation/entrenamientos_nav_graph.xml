@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/entrenamientos_nav_graph"
+    app:startDestination="@id/entrenamientosFragment">
+
+    <fragment
+        android:id="@+id/entrenamientosFragment"
+        android:name="com.iesnervion.keepitfitness.ui.entrenamientos.EntrenamientosFragment"
+        android:label="fragment_entrenamientos"
+        tools:layout="@layout/fragment_entrenamientos" />
+</navigation>

@@ -33,14 +33,18 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i("Navigation", "ViewCreated -> SignUpFragment")
+
         initObservers()
         initListeners()
     }
 
+    /**
+     * Inicializa los observadores de los datos de la vista
+     */
     private fun initObservers() {
         viewModel.signUpState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is Resource.Success -> {
+                is Resource.Success -> {    // Si se ha registrado correctamente
                     handleLoading(false)
                     activity?.onBackPressedDispatcher?.onBackPressed()
                     Toast.makeText(
@@ -49,7 +53,7 @@ class SignUpFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                is Resource.Error -> {
+                is Resource.Error -> {      // Si ha habido un error
                     handleLoading(false)
                     Toast.makeText(
                         requireContext(),
@@ -57,23 +61,32 @@ class SignUpFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                is Resource.Loading -> handleLoading(true)
-                else -> Unit
+                is Resource.Loading -> handleLoading(true)      // Si está cargando
+                else -> Unit    // Si no se ha hecho nada
             }
         }
     }
 
+    /**
+     * Inicializa los listeners de la vista
+     */
     private fun initListeners() {
         with(binding) {
+            // Botón de registro de usuario
             bSignUp.setOnClickListener {
                 handleSignUp()
             }
+            // Botón de volver atrás
             bBack.setOnClickListener {
                 activity?.onBackPressedDispatcher?.onBackPressed()
             }
         }
     }
 
+    /**
+     * Maneja el registro de un usuario.
+     * Obtiene los datos de los EditText y los envía al ViewModel para que se registre.
+     */
     private fun handleSignUp() {
         val email = binding.etEmail.text.toString()
         val password = binding.etPassword.text.toString()
@@ -81,6 +94,10 @@ class SignUpFragment : Fragment() {
         viewModel.signUp(email, password)
     }
 
+    /**
+     * Maneja la visibilidad del ProgressBar
+     * @param isLoading Booleano que indica si se está cargando o no
+     */
     private fun handleLoading(isLoading: Boolean) {
         with(binding) {
             if (isLoading) {

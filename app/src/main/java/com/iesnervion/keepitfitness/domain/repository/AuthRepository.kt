@@ -4,8 +4,20 @@ import com.iesnervion.keepitfitness.util.Resource
 
 interface AuthRepository {
 
-    suspend fun login (email:String, password:String) : Boolean
+    /**
+     * Loguea a un usuario con email y contraseña y devuelve un String con el UID
+     * @param email String con el email
+     * @param password String con la contraseña
+     * @return String con el UID
+     */
+    suspend fun login (email:String, password:String) : String
 
-    suspend fun signup (email:String, password:String) : Boolean
+    /**
+     * Registra a un usuario con email y contraseña y devuelve un String con el UID
+     * @param email String con el email
+     * @param password String con la contraseña
+     * @return String con el UID
+     */
+    suspend fun signup (email:String, password:String) : String
 
 }

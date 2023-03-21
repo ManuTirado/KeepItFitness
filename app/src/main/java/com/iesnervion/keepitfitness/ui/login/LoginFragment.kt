@@ -33,18 +33,26 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i("Navigation", "ViewCreated -> LoginFragment")
+
         initObservers()
         initListeners()
     }
 
+    /**
+     * Inicializa los observadores de los datos de la vista.
+     * Se observa el estado del login del viewmodel y se gestiona en función de su valor.
+     */
     private fun initObservers() {
         viewModel.loginState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is Resource.Success -> {
+                is Resource.Success -> {    // Si el login es correcto, se navega a la pantalla principal
                     handleLoading(isLoading = false)
-                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                    val action =
+                        LoginFragmentDirections.actionLoginFragmentToHomeActivity()
+                        //LoginFragmentDirections.actionLoginFragmentToHomeFragment(state.data.uid)
+                    findNavController().navigate(action)
                 }
-                is Resource.Error -> {
+                is Resource.Error -> {      // Si el login es incorrecto, se muestra un mensaje de error
                     handleLoading(isLoading = false)
                     Toast.makeText(
                         requireContext(),
@@ -52,19 +60,29 @@ class LoginFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                is Resource.Loading -> handleLoading(isLoading = true)
-                else -> Unit
+                is Resource.Loading -> handleLoading(isLoading = true)  // Si está cargando, se muestra el ProgressBar
+                else -> Unit    // Si no se hace nada
             }
         }
     }
 
+    /**
+     * Inicializa los listeners de la vista.
+     */
     private fun initListeners() {
         with(binding) {
+            // Al pulsar el botón de login, se llama a la función handleLogin()
             bLogin.setOnClickListener { handleLogin() }
+            // Al pulsar el botón de registro, se navega a la pantalla de registro
             bSignUp.setOnClickListener { findNavController().navigate(R.id.action_loginFragment_to_signUpFragment) }
+            // Al pulsar el botón de recuperación de contraseña, se navega a la pantalla de recuperación de contraseña
+            bPasswordRecovery.setOnClickListener { findNavController().navigate(R.id.action_loginFragment_to_passwordRecoveryFragment) }
         }
     }
 
+    /**
+     * Gestiona el login. Obtiene los datos de los EditText y llama al método login() del ViewModel.
+     */
     private fun handleLogin() {
         val email = binding.etEmail.text.toString()
         val password = binding.etPassword.text.toString()
@@ -72,6 +90,10 @@ class LoginFragment : Fragment() {
         viewModel.login(email, password)
     }
 
+    /**
+     * Gestiona la visibilidad del ProgressBar.
+     * @param isLoading Booleano que indica si está cargando o no.
+     */
     private fun handleLoading(isLoading: Boolean) {
         with(binding) {
             if (isLoading) {
