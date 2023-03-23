@@ -20,6 +20,8 @@ class UserConfigurationActivity : AppCompatActivity() {
 
     private val viewModel: UserConfigurationViewModel by viewModels()
 
+    private lateinit var user: User
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserConfigurationBinding.inflate(layoutInflater)
@@ -37,11 +39,12 @@ class UserConfigurationActivity : AppCompatActivity() {
      * Se observa el estado del login del viewmodel y se gestiona en función de su valor.
      */
     private fun initObservers() {
-        viewModel.userState.observe(this) {state ->
+        viewModel.userState.observe(this) { state ->
             when (state) {
                 is Resource.Success -> {    // Si se recibe el usuario correctamente
                     handleUserLoading(isLoading = false)
-                    displayUserData(state.data)
+                    user = state.data
+                    displayUserData(user)
                 }
                 is Resource.Error -> {      // Si ocurre un error al recibir el usuario
                     handleUserLoading(isLoading = false)
@@ -56,9 +59,10 @@ class UserConfigurationActivity : AppCompatActivity() {
                 else -> Unit    // Si no se hace nada
             }
         }
-        viewModel.updatingState.observe(this) {state ->
+        viewModel.updatingState.observe(this) { state ->
             when (state) {
                 is Resource.Success -> {    // Si se actualiza el usuario correctamente
+                    viewModel.getUser()
                     handleUserUpdating(isLoading = false)
                     Toast.makeText(
                         this,
@@ -82,9 +86,10 @@ class UserConfigurationActivity : AppCompatActivity() {
 
     private fun displayUserData(user: User) {
         with(binding) {
-            Glide.with(ivUserPhoto.context).load("https://goo.gl/gEgYUd").into(binding.ivUserPhoto)
+            Glide.with(ivUserPhoto.context).load(user.photo).placeholder(R.drawable.ic_uknown_user)
+                .into(binding.ivUserPhoto)
             etUsername.setText(user.username)
-            etEmail.setText(user.email)
+            etPhotoUrl.setText(user.photo)
         }
     }
 
@@ -97,12 +102,9 @@ class UserConfigurationActivity : AppCompatActivity() {
                 onBackPressedDispatcher.onBackPressed()
             }
             bSaveChanges.setOnClickListener {
-                viewModel.updateUser(
-                    User(
-                        username = etUsername.text.toString(),
-                        email = etEmail.text.toString()
-                    )
-                )
+                user.photo = etPhotoUrl.text.toString()
+                user.username = etUsername.text.toString()
+                viewModel.updateUser(user)
             }
         }
     }

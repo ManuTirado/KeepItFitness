@@ -7,7 +7,7 @@ package com.iesnervion.keepitfitness.domain.model
  */
 data class User(
     var uid: String = "",
-    val email: String = "",
-    val username: String = "",
-    val photo: String = ""
+    var email: String = "",
+    var username: String = "",
+    var photo: String = ""
 )

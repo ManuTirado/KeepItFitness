@@ -4,8 +4,10 @@ import com.iesnervion.keepitfitness.domain.model.User
 import com.iesnervion.keepitfitness.domain.repository.AuthRepository
 import com.iesnervion.keepitfitness.domain.repository.UserRepository
 import com.iesnervion.keepitfitness.util.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class FirebaseLoginUseCase @Inject constructor(
