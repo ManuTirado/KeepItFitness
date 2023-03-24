@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iesnervion.keepitfitness.domain.model.User
 import com.iesnervion.keepitfitness.domain.usecase.FirebaseGetUserUseCase
-import com.iesnervion.keepitfitness.domain.usecase.FirebaseUserUpdateUseCase
+import com.iesnervion.keepitfitness.domain.usecase.FirebaseUpdateUserUseCase
 import com.iesnervion.keepitfitness.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserConfigurationViewModel @Inject constructor(
     private val firebaseGetUserUseCase: FirebaseGetUserUseCase,
-    private val firebaseUserUpdateUseCase: FirebaseUserUpdateUseCase
+    private val firebaseUpdateUserUseCase: FirebaseUpdateUserUseCase
 ) : ViewModel() {
 
     private val _userState: MutableLiveData<Resource<User>> = MutableLiveData()
@@ -38,7 +38,7 @@ class UserConfigurationViewModel @Inject constructor(
 
     fun updateUser(user: User) {
         viewModelScope.launch {
-            firebaseUserUpdateUseCase(user).onEach { state ->
+            firebaseUpdateUserUseCase(user).onEach { state ->
                 _updatingState.value = state
             }.launchIn(viewModelScope)
         }

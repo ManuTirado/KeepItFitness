@@ -22,7 +22,7 @@ class FirebaseGetUserUseCase @Inject constructor(
         emit(Resource.Loading)
         val userUID = firebaseAuth.uid
         if (!userUID.isNullOrEmpty()) {
-            val user = userRepository.getUser(userUID)
+            val user =  userRepository.getUser(userUID)
 
             emit(Resource.Success(user))
             emit(Resource.Finished)

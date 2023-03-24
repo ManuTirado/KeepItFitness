@@ -11,4 +11,5 @@
     <string name="home__user_configuration_header">Configuración</string>
     <string name="home__username_hint">Nombre de usuario</string>
     <string name="home__save_changes_button">Guardar</string>
+    <string name="realizar_entrenamiento__start_training_button">Empezar</string>
 </resources>

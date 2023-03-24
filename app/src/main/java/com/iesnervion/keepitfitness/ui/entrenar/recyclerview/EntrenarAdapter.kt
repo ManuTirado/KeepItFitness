@@ -1,23 +1,22 @@
 package com.iesnervion.keepitfitness.ui.entrenamientos.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.iesnervion.keepitfitness.R
 import com.iesnervion.keepitfitness.domain.model.Entrenamiento
 
-class TrainingAdapter(
+class EntrenarAdapter(
     private var trainingList: List<Entrenamiento>,
     private val onClickListener: (Entrenamiento) -> Unit
-) : RecyclerView.Adapter<TrainingViewHolder>() {
+) : RecyclerView.Adapter<EntrenarViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrainingViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntrenarViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return TrainingViewHolder(layoutInflater.inflate(R.layout.item_training, parent, false))
+        return EntrenarViewHolder(layoutInflater.inflate(R.layout.item_entrenar, parent, false))
     }
 
-    override fun onBindViewHolder(holder: TrainingViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: EntrenarViewHolder, position: Int) {
         val item = trainingList[position]
         holder.render(item, onClickListener)
     }
@@ -27,7 +26,6 @@ class TrainingAdapter(
     }
 
     fun updateData(data: List<Entrenamiento>) {
-        Log.i("Navigation","Function 'updateData' executed")
         trainingList = data
         notifyDataSetChanged()
     }

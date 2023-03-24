@@ -8,15 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.iesnervion.keepitfitness.R
 import com.iesnervion.keepitfitness.databinding.FragmentEntrenamientosBinding
-import com.iesnervion.keepitfitness.databinding.FragmentLoginBinding
+import com.iesnervion.keepitfitness.domain.model.Ejercicio
+import com.iesnervion.keepitfitness.domain.model.EjercicioEntrenamiento
 import com.iesnervion.keepitfitness.domain.model.Entrenamiento
-import com.iesnervion.keepitfitness.ui.entrenamientos.adapter.TrainingAdapter
-import com.iesnervion.keepitfitness.ui.login.LoginFragmentDirections
-import com.iesnervion.keepitfitness.ui.login.LoginViewModel
+import com.iesnervion.keepitfitness.ui.entrenamientos.adapter.EntrenamientosAdapter
 import com.iesnervion.keepitfitness.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,7 +25,7 @@ class EntrenamientosFragment : Fragment() {
 
     private val viewModel: EntrenamientosViewModel by viewModels()
 
-    private lateinit var recyclerAdapter: TrainingAdapter
+    private lateinit var recyclerAdapter: EntrenamientosAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,7 +39,6 @@ class EntrenamientosFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.i("Navigation", "ViewCreated -> EntrenamientosFragment")
 
-        initRecyclerView(emptyList())
         initObservers()
         initListeners()
     }
@@ -55,24 +51,23 @@ class EntrenamientosFragment : Fragment() {
     private fun initRecyclerView(trainings:List<Entrenamiento>) {
         //val manager = GridLayoutManager(this, 2)
         val manager = LinearLayoutManager(requireContext())
-        //val decoration = DividerItemDecoration(this, manager.orientation)
+        //val decoration = DividerItemDecoration(requireContext(), manager.orientation)
 
         binding.recyclerTraining.layoutManager = manager
-        recyclerAdapter = TrainingAdapter(
+        recyclerAdapter = EntrenamientosAdapter(
             trainings
         ) { training -> onItemSelected(training) }
         binding.recyclerTraining.adapter = recyclerAdapter
 
-        //binding.recyclerSuperHero.addItemDecoration(decoration)
+        //binding.recyclerTraining.addItemDecoration(decoration)
     }
 
     private fun updateRecyclerView(data: List<Entrenamiento>) {
         recyclerAdapter.updateData(data)
-        Log.i("Navigation","Function 'updateRecyclerView' executed")
     }
 
     fun onItemSelected(entrenamiento: Entrenamiento) {
-        Toast.makeText(requireContext(), entrenamiento.id, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "En construcción...", Toast.LENGTH_SHORT).show()
     }
 
     /**
@@ -83,7 +78,8 @@ class EntrenamientosFragment : Fragment() {
         viewModel.loadingTrainsState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is Resource.Success -> {    // Si se obtiene el listado correctamente
-                    updateRecyclerView(state.data)
+                    initRecyclerView(state.data)
+                    //updateRecyclerView(state.data)
                     handleLoading(isLoading = false)
                 }
                 is Resource.Error -> {      // Si ocurre un error al obtener el listado
@@ -126,5 +122,44 @@ class EntrenamientosFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun insertarEntrenamientoPrueba() {
+        viewModel.insertTraining(Entrenamiento(
+            id = "avanzado",
+            desc = "Para los mama hierros más fuertes que el vinagre, deberías de mirartelo, ahora en serio",
+            listOf(
+                EjercicioEntrenamiento(
+                    excersice = Ejercicio(id = "1", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/curl-biceps.jpg", name = "curl de biceps", type = "brazo"),
+                    reps = 10,
+                    weight = 12
+                ),
+                EjercicioEntrenamiento(
+                    excersice = Ejercicio(id = "3", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/sentadilla.jpg", name = "sentadilla", type = "pierna"),
+                    reps = 20,
+                    weight = 30
+                ),
+                EjercicioEntrenamiento(
+                    excersice = Ejercicio(id = "2", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/pressbanca.png", name = "press de banca", type = "pecho"),
+                    reps = 12,
+                    weight = 30
+                ),
+                EjercicioEntrenamiento(
+                    excersice = Ejercicio(id = "1", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/curl-biceps.jpg", name = "curl de biceps", type = "brazo"),
+                    reps = 10,
+                    weight = 12
+                ),
+                EjercicioEntrenamiento(
+                    excersice = Ejercicio(id = "3", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/sentadilla.jpg", name = "sentadilla", type = "pierna"),
+                    reps = 20,
+                    weight = 30
+                ),
+                EjercicioEntrenamiento(
+                    excersice = Ejercicio(id = "2", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/pressbanca.png", name = "press de banca", type = "pecho"),
+                    reps = 12,
+                    weight = 30
+                )
+            )
+        ))
     }
 }

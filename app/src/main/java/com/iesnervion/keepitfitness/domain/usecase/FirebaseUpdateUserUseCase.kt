@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class FirebaseUserUpdateUseCase @Inject constructor(
+class FirebaseUpdateUserUseCase @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val userRepository: UserRepository
 ) {

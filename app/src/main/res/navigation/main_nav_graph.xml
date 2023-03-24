@@ -34,7 +34,7 @@
         tools:layout="@layout/fragment_home">
 
         <argument
-            android:name="uid"
+            android:name="id"
             app:argType="string"
             app:nullable="false" />
     </fragment>

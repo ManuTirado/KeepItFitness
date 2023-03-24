@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/realizar_entrenamiento_nav_graph"
+    app:startDestination="@id/preRealizarEntrenamientoFragment">
+
+    <fragment
+        android:id="@+id/preRealizarEntrenamientoFragment"
+        android:name="com.iesnervion.keepitfitness.ui.pre_realizar_entrenamiento.PreRealizarEntrenamientoFragment"
+        android:label="fragment_pre_realizar_entrenamiento"
+        tools:layout="@layout/fragment_pre_realizar_entrenamiento" >
+        <action
+            android:id="@+id/action_preRealizarEntrenamientoFragment_to_realizarEntrenamientoFragment"
+            app:destination="@id/realizarEntrenamientoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/realizarEntrenamientoFragment"
+        android:name="com.iesnervion.keepitfitness.ui.realizar_entrenamiento.RealizarEntrenamientoFragment"
+        android:label="fragment_realizar_entrenamiento"
+        tools:layout="@layout/fragment_realizar_entrenamiento" >
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
+</navigation>

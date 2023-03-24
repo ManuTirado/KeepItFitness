@@ -62,8 +62,9 @@ class UserConfigurationActivity : AppCompatActivity() {
         viewModel.updatingState.observe(this) { state ->
             when (state) {
                 is Resource.Success -> {    // Si se actualiza el usuario correctamente
-                    viewModel.getUser()
+                    //viewModel.getUser()
                     handleUserUpdating(isLoading = false)
+                    onBackPressedDispatcher.onBackPressed()
                     Toast.makeText(
                         this,
                         "Usuario actualizado correctamente",
