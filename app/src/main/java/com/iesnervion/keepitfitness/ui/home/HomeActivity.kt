@@ -13,8 +13,6 @@ import com.bumptech.glide.Glide
 import com.iesnervion.keepitfitness.R
 import com.iesnervion.keepitfitness.databinding.ActivityHomeBinding
 import com.iesnervion.keepitfitness.domain.model.User
-import com.iesnervion.keepitfitness.ui.configuration.UserConfigurationViewModel
-import com.iesnervion.keepitfitness.ui.login.LoginFragmentDirections
 import com.iesnervion.keepitfitness.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 

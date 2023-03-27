@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.iesnervion.keepitfitness.R
-import com.iesnervion.keepitfitness.databinding.FragmentEntrenamientosBinding
 import com.iesnervion.keepitfitness.databinding.FragmentProgresoBinding
 import dagger.hilt.android.AndroidEntryPoint
 

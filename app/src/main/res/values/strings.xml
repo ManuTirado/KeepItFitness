@@ -17,4 +17,5 @@
     <string name="home__save_changes_button">Guardar</string>
     <string name="login__foto_url_hint">Foto</string>
     <string name="realizar_entrenamiento__start_training_button">Empezar</string>
+    <string name="home__next_exercise_button">Siguiente</string>
 </resources>

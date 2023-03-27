@@ -6,11 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.iesnervion.keepitfitness.R
-import com.iesnervion.keepitfitness.databinding.FragmentPreRealizarEntrenamientoBinding
 import com.iesnervion.keepitfitness.databinding.FragmentRealizarEntrenamientoBinding
-import com.iesnervion.keepitfitness.ui.RealizarEntrenamientoActivityArgs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,7 +16,7 @@ class RealizarEntrenamientoFragment : Fragment() {
     private var _binding: FragmentRealizarEntrenamientoBinding? = null
     private val binding get() = _binding!!
 
-    //private val viewModel:  by viewModels()
+    private val viewModel: RealizarEntrenamientoViewModel  by viewModels()
 
     private val args: RealizarEntrenamientoFragmentArgs by navArgs()
 
@@ -35,7 +33,7 @@ class RealizarEntrenamientoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.i("Navigation", "ViewCreated -> FragmentRealizarEntrenamientoBinding")
 
-        binding.tvPrueba.text = args.id
+        //binding.tvPrueba.text = args.id
         //initObservers()
         //initListeners()
     }

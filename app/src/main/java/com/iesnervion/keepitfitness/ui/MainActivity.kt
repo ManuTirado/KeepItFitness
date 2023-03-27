@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.iesnervion.keepitfitness.databinding.ActivityMainBinding
-import com.iesnervion.keepitfitness.databinding.ActivityRealizarEntrenamientoBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
