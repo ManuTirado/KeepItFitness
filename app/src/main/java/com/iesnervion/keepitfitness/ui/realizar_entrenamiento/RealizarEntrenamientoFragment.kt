@@ -6,9 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
+import com.iesnervion.keepitfitness.R
 import com.iesnervion.keepitfitness.databinding.FragmentRealizarEntrenamientoBinding
+import com.iesnervion.keepitfitness.domain.model.EjercicioEntrenamiento
+import com.iesnervion.keepitfitness.domain.model.Entrenamiento
+import com.iesnervion.keepitfitness.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,9 +22,13 @@ class RealizarEntrenamientoFragment : Fragment() {
     private var _binding: FragmentRealizarEntrenamientoBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: RealizarEntrenamientoViewModel  by viewModels()
+    private val viewModel: RealizarEntrenamientoViewModel by viewModels()
 
     private val args: RealizarEntrenamientoFragmentArgs by navArgs()
+
+    private lateinit var entrenamiento: Entrenamiento
+    private var ejerciciosRealizados: MutableList<EjercicioEntrenamiento> = arrayListOf()
+    private var indiceEjercicioActual: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,11 +41,138 @@ class RealizarEntrenamientoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.i("Navigation", "ViewCreated -> FragmentRealizarEntrenamientoBinding")
+        Log.i("Navigation", "ViewCreated -> RealizarEntrenamientoFragment")
 
-        //binding.tvPrueba.text = args.id
-        //initObservers()
-        //initListeners()
+        viewModel.getTrain(args.id)
+        initObservers()
+        initListeners()
+    }
+
+    private fun initObservers() {
+        viewModel.loadingTrainState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is Resource.Success -> {    // Si se obtiene el entrenamiento correctamente
+                    entrenamiento = state.data
+                    handleLoading(isLoading = false)
+                    displayExercise(entrenamiento.ejercicios[indiceEjercicioActual])
+                }
+                is Resource.Error -> {      // Si ocurre un error al obtener el listado
+                    handleLoading(isLoading = false)
+                    Toast.makeText(
+                        requireContext(),
+                        state.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is Resource.Loading -> handleLoading(isLoading = true)  // Si está cargando, se muestra el ProgressBar
+                else -> Unit    // Si no se hace nada
+            }
+        }
+        viewModel.insertTrainingState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is Resource.Success -> {    // Si se inserta el entrenamiento correctamente
+                    handleLoading(isLoading = false)
+                    Toast.makeText(requireContext(), "Insertado con éxito", Toast.LENGTH_SHORT).show()
+                }
+                is Resource.Error -> {      // Si ocurre un error al insertar el entrenamiento
+                    handleLoading(isLoading = false)
+                    Toast.makeText(
+                        requireContext(),
+                        state.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is Resource.Loading -> handleLoading(isLoading = true)  // Si está cargando, se muestra el ProgressBar
+                else -> Unit    // Si no se hace nada
+            }
+        }
+    }
+
+    private fun nextExercise() {
+        view?.findFocus()?.clearFocus()
+        indiceEjercicioActual++
+
+        if (indiceEjercicioActual < entrenamiento.ejercicios.size) {
+            saveExercise()
+            displayExercise(entrenamiento.ejercicios[indiceEjercicioActual])
+        } else {
+            saveTraining()
+        }
+
+    }
+
+    private fun saveTraining() {
+        entrenamiento.ejercicios = ejerciciosRealizados
+        viewModel.insertUserTraining(entrenamiento)
+    }
+
+    private fun saveExercise() {
+        val weight: Long
+        val reps: Long
+
+        with(binding) {
+            if (etWeight.text.toString().isNullOrEmpty()) {
+                weight = tilWeight.hint.toString().toLong()
+            } else {
+                weight = etWeight.text.toString().toLong()
+            }
+
+            if (etReps.text.toString().isNullOrEmpty()) {
+                reps = tilReps.hint.toString().toLong()
+            } else {
+                reps = etReps.text.toString().toLong()
+            }
+        }
+        ejerciciosRealizados.add(
+            EjercicioEntrenamiento(
+                entrenamiento.ejercicios[indiceEjercicioActual].excersice,
+                reps = reps,
+                weight = weight
+            )
+        )
+
+    }
+
+    private fun displayExercise(ejercicio: EjercicioEntrenamiento) {
+        with(binding) {
+            etWeight.setText("")
+            etReps.setText("")
+
+            Glide.with(ivExercisePhoto.context).load(ejercicio.excersice.photo)
+                .placeholder(R.drawable.ic_dumbbell)
+                .into(ivExercisePhoto)
+            tilWeight.hint = ejercicio.weight.toString()
+            tilReps.hint = ejercicio.reps.toString()
+        }
+    }
+
+    private fun initListeners() {
+        with(binding) {
+            bBack.setOnClickListener {
+                activity?.onBackPressedDispatcher?.onBackPressed()
+            }
+            bNextExercise.setOnClickListener {
+                nextExercise()
+            }
+        }
+    }
+
+    /**
+     * Gestiona la visibilidad del ProgressBar.
+     * @param isLoading Booleano que indica si está cargando o no.
+     */
+    private fun handleLoading(isLoading: Boolean) {
+        with(binding) {
+            if (isLoading) {
+                bNextExercise.text = ""
+                bNextExercise.isEnabled = false
+                pbLoadingTraining.visibility = View.VISIBLE
+            } else {
+                pbLoadingTraining.visibility = View.GONE
+                bNextExercise.text = getString(R.string.home__next_exercise_button)
+                bNextExercise.isEnabled = true
+            }
+        }
     }
 
     override fun onDestroyView() {

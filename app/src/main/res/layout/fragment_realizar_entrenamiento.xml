@@ -44,6 +44,17 @@
         app:strokeWidth="5dp"
         tools:src="@drawable/ic_dumbbell" />
 
+    <ProgressBar
+        android:id="@+id/pbLoadingTraining"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/ivExercisePhoto"
+        app:layout_constraintEnd_toEndOf="@+id/ivExercisePhoto"
+        app:layout_constraintStart_toStartOf="@+id/ivExercisePhoto"
+        app:layout_constraintTop_toTopOf="@+id/ivExercisePhoto" />
+
     <TableLayout
         android:id="@+id/tlPickers"
         android:layout_width="match_parent"
@@ -84,7 +95,9 @@
                 android:id="@+id/tilWeight"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+
+                tools:hint="15">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etWeight"
@@ -93,8 +106,7 @@
                     android:inputType="number"
                     android:textAlignment="center"
                     android:textSize="22sp"
-                    android:textStyle="bold"
-                    tools:hint="15" />
+                    android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -110,7 +122,8 @@
                 android:id="@+id/tilReps"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                tools:hint="8">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etReps"
@@ -119,8 +132,7 @@
                     android:inputType="number"
                     android:textAlignment="center"
                     android:textSize="22sp"
-                    android:textStyle="bold"
-                    tools:hint="8" />
+                    android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </TableRow>
