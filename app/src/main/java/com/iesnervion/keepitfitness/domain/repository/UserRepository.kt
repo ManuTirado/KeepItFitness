@@ -1,6 +1,7 @@
 package com.iesnervion.keepitfitness.domain.repository
 
 import com.iesnervion.keepitfitness.domain.model.Entrenamiento
+import com.iesnervion.keepitfitness.domain.model.EntrenamientoRealizado
 import com.iesnervion.keepitfitness.domain.model.User
 
 interface UserRepository {
@@ -19,5 +20,5 @@ interface UserRepository {
      */
     suspend fun getUser(uid:String): User
 
-    suspend fun insertTrainingToUserDocument(training: Entrenamiento, userId: String): Boolean
+    suspend fun insertTrainingToUserDocument(training: EntrenamientoRealizado, userId: String): Boolean
 }

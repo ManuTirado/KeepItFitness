@@ -14,6 +14,7 @@ import com.iesnervion.keepitfitness.R
 import com.iesnervion.keepitfitness.databinding.FragmentRealizarEntrenamientoBinding
 import com.iesnervion.keepitfitness.domain.model.EjercicioEntrenamiento
 import com.iesnervion.keepitfitness.domain.model.Entrenamiento
+import com.iesnervion.keepitfitness.domain.model.EntrenamientoRealizado
 import com.iesnervion.keepitfitness.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -54,6 +55,7 @@ class RealizarEntrenamientoFragment : Fragment() {
                 is Resource.Success -> {    // Si se obtiene el entrenamiento correctamente
                     entrenamiento = state.data
                     handleLoading(isLoading = false)
+                    initChronometer()
                     displayExercise(entrenamiento.ejercicios[indiceEjercicioActual])
                 }
                 is Resource.Error -> {      // Si ocurre un error al obtener el listado
@@ -72,7 +74,8 @@ class RealizarEntrenamientoFragment : Fragment() {
             when (state) {
                 is Resource.Success -> {    // Si se inserta el entrenamiento correctamente
                     handleLoading(isLoading = false)
-                    Toast.makeText(requireContext(), "Insertado con éxito", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Insertado con éxito", Toast.LENGTH_SHORT)
+                        .show()
                 }
                 is Resource.Error -> {      // Si ocurre un error al insertar el entrenamiento
                     handleLoading(isLoading = false)
@@ -88,6 +91,10 @@ class RealizarEntrenamientoFragment : Fragment() {
         }
     }
 
+    private fun initChronometer() {
+        binding.chronometer.start()
+    }
+
     private fun nextExercise() {
         view?.findFocus()?.clearFocus()
         indiceEjercicioActual++
@@ -95,15 +102,23 @@ class RealizarEntrenamientoFragment : Fragment() {
         if (indiceEjercicioActual < entrenamiento.ejercicios.size) {
             saveExercise()
             displayExercise(entrenamiento.ejercicios[indiceEjercicioActual])
-        } else {
+        } else {    // Ha terminado el entrenamiento
+            binding.chronometer.stop()
             saveTraining()
         }
-
     }
 
     private fun saveTraining() {
-        entrenamiento.ejercicios = ejerciciosRealizados
-        viewModel.insertUserTraining(entrenamiento)
+        val time: String = binding.chronometer.text.toString()
+
+        val entrenamientoRealizado = EntrenamientoRealizado(
+            id = entrenamiento.id,
+            desc = entrenamiento.desc,
+            time = time,
+            ejercicios = entrenamiento.ejercicios
+        )
+
+        viewModel.insertUserTraining(entrenamientoRealizado)
     }
 
     private fun saveExercise() {
@@ -125,7 +140,7 @@ class RealizarEntrenamientoFragment : Fragment() {
         }
         ejerciciosRealizados.add(
             EjercicioEntrenamiento(
-                entrenamiento.ejercicios[indiceEjercicioActual].excersice,
+                entrenamiento.ejercicios[indiceEjercicioActual].exercise,
                 reps = reps,
                 weight = weight
             )
@@ -138,7 +153,7 @@ class RealizarEntrenamientoFragment : Fragment() {
             etWeight.setText("")
             etReps.setText("")
 
-            Glide.with(ivExercisePhoto.context).load(ejercicio.excersice.photo)
+            Glide.with(ivExercisePhoto.context).load(ejercicio.exercise.photo)
                 .placeholder(R.drawable.ic_dumbbell)
                 .into(ivExercisePhoto)
             tilWeight.hint = ejercicio.weight.toString()

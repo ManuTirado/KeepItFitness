@@ -128,34 +128,35 @@ class EntrenamientosFragment : Fragment() {
         viewModel.insertTraining(Entrenamiento(
             id = "avanzado",
             desc = "Para los mama hierros más fuertes que el vinagre, deberías de mirartelo, ahora en serio",
+            time = "30:00",
             listOf(
                 EjercicioEntrenamiento(
-                    excersice = Ejercicio(id = "1", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/curl-biceps.jpg", name = "curl de biceps", type = "brazo"),
+                    exercise = Ejercicio(id = "1", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/curl-biceps.jpg", name = "curl de biceps", type = "brazo"),
                     reps = 10,
-                    weight = 12
+                    weight = 12,
                 ),
                 EjercicioEntrenamiento(
-                    excersice = Ejercicio(id = "3", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/sentadilla.jpg", name = "sentadilla", type = "pierna"),
+                    exercise = Ejercicio(id = "3", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/sentadilla.jpg", name = "sentadilla", type = "pierna"),
                     reps = 20,
                     weight = 30
                 ),
                 EjercicioEntrenamiento(
-                    excersice = Ejercicio(id = "2", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/pressbanca.png", name = "press de banca", type = "pecho"),
+                    exercise = Ejercicio(id = "2", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/pressbanca.png", name = "press de banca", type = "pecho"),
                     reps = 12,
                     weight = 30
                 ),
                 EjercicioEntrenamiento(
-                    excersice = Ejercicio(id = "1", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/curl-biceps.jpg", name = "curl de biceps", type = "brazo"),
+                    exercise = Ejercicio(id = "1", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/curl-biceps.jpg", name = "curl de biceps", type = "brazo"),
                     reps = 10,
                     weight = 12
                 ),
                 EjercicioEntrenamiento(
-                    excersice = Ejercicio(id = "3", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/sentadilla.jpg", name = "sentadilla", type = "pierna"),
+                    exercise = Ejercicio(id = "3", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/sentadilla.jpg", name = "sentadilla", type = "pierna"),
                     reps = 20,
                     weight = 30
                 ),
                 EjercicioEntrenamiento(
-                    excersice = Ejercicio(id = "2", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/pressbanca.png", name = "press de banca", type = "pecho"),
+                    exercise = Ejercicio(id = "2", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/pressbanca.png", name = "press de banca", type = "pecho"),
                     reps = 12,
                     weight = 30
                 )

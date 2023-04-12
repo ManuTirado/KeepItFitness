@@ -32,7 +32,7 @@ class FirestoreTrainsRepositoryImpl @Inject constructor(
                 val ejerciceMap = ejercicio["excersice"] as HashMap<String, String>
 
                 EjercicioEntrenamiento(
-                    excersice = Ejercicio(
+                    exercise = Ejercicio(
                         id = ejerciceMap["id"] as String,
                         photo = ejerciceMap["photo"] as String,
                         name = ejerciceMap["name"] as String,
@@ -46,6 +46,7 @@ class FirestoreTrainsRepositoryImpl @Inject constructor(
             Entrenamiento(
                 id = document.get("id") as String,
                 desc = document.get("desc") as String,
+                time = document.get("time") as String,
                 ejercicios = ejercicios
             )
         }
@@ -68,7 +69,7 @@ class FirestoreTrainsRepositoryImpl @Inject constructor(
                 val ejerciceMap = ejercicio["excersice"] as HashMap<String, String>
 
                 EjercicioEntrenamiento(
-                    excersice = Ejercicio(
+                    exercise = Ejercicio(
                         id = ejerciceMap["id"] as String,
                         photo = ejerciceMap["photo"] as String,
                         name = ejerciceMap["name"] as String,
@@ -82,6 +83,7 @@ class FirestoreTrainsRepositoryImpl @Inject constructor(
             Entrenamiento(
                 id = document.get("id") as String,
                 desc = document.get("desc") as String,
+                time = document.get("time") as String,
                 ejercicios = ejercicios
             )
         }
@@ -94,10 +96,10 @@ class FirestoreTrainsRepositoryImpl @Inject constructor(
         val ejercicios = entrenamiento.ejercicios.map { ejercicioEntrenamiento ->
             hashMapOf(
                 "excersice" to hashMapOf(
-                    "id" to ejercicioEntrenamiento.excersice.id,
-                    "photo" to ejercicioEntrenamiento.excersice.photo,
-                    "name" to ejercicioEntrenamiento.excersice.name,
-                    "type" to ejercicioEntrenamiento.excersice.type
+                    "id" to ejercicioEntrenamiento.exercise.id,
+                    "photo" to ejercicioEntrenamiento.exercise.photo,
+                    "name" to ejercicioEntrenamiento.exercise.name,
+                    "type" to ejercicioEntrenamiento.exercise.type
                 ),
                 "reps" to ejercicioEntrenamiento.reps,
                 "weight" to ejercicioEntrenamiento.weight

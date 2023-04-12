@@ -14,9 +14,9 @@ class PreRealizarEntrenamientoViewHolder(view: View) :
 
     fun render(ejercicioModel: EjercicioEntrenamiento, onClickListener: (EjercicioEntrenamiento) -> Unit) {
         with(binding) {
-            Glide.with(ivExercisePhoto.context).load(ejercicioModel.excersice.photo).placeholder(R.drawable.ic_dumbbell)
+            Glide.with(ivExercisePhoto.context).load(ejercicioModel.exercise.photo).placeholder(R.drawable.ic_dumbbell)
                 .into(binding.ivExercisePhoto)
-            tvExerciseName.text = ejercicioModel.excersice.name
+            tvExerciseName.text = ejercicioModel.exercise.name
             tvExerciseWeight.text = ejercicioModel.weight.toString().plus("kg")
             tvExerciseReps.text = ejercicioModel.reps.toString()
 

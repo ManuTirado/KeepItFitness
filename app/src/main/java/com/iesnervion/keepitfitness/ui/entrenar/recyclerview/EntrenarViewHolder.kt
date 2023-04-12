@@ -1,4 +1,4 @@
-package com.iesnervion.keepitfitness.ui.entrenamientos.adapter
+package com.iesnervion.keepitfitness.ui.entrenar.recyclerview
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -11,9 +11,11 @@ class EntrenarViewHolder(view: View) :
     val binding = ItemEntrenarBinding.bind(view)
 
     fun render(entrenamientoModel: Entrenamiento, onClickListener: (Entrenamiento) -> Unit) {
-        binding.tvTrainingName.text = entrenamientoModel.id
-        binding.tvTrainingDesc.text = entrenamientoModel.desc
-
+        with(binding) {
+            tvTrainingName.text = entrenamientoModel.id
+            tvTrainingDesc.text = entrenamientoModel.desc
+            tvTime.text = entrenamientoModel.time
+        }
         itemView.setOnClickListener {
             onClickListener(entrenamientoModel)
         }

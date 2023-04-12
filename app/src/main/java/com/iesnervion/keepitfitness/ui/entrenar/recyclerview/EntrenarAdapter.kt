@@ -1,4 +1,4 @@
-package com.iesnervion.keepitfitness.ui.entrenamientos.adapter
+package com.iesnervion.keepitfitness.ui.entrenar.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

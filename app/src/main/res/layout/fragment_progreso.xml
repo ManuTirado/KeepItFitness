@@ -8,6 +8,8 @@
     android:background="#247595">
 
 
+
+
     <TextView
         android:textStyle="bold"
         android:textSize="30sp"

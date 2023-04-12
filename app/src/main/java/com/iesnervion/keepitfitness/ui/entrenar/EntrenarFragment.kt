@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.iesnervion.keepitfitness.databinding.FragmentEntrenarBinding
 import com.iesnervion.keepitfitness.domain.model.Entrenamiento
-import com.iesnervion.keepitfitness.ui.entrenamientos.adapter.EntrenarAdapter
+import com.iesnervion.keepitfitness.ui.entrenar.recyclerview.EntrenarAdapter
 import com.iesnervion.keepitfitness.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 

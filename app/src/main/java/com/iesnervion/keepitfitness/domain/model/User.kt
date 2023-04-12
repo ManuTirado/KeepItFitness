@@ -9,5 +9,6 @@ data class User(
     var uid: String = "",
     var email: String = "",
     var username: String = "",
-    var photo: String = ""
+    var photo: String = "",
+    var entrenamientos: List<String>? = null
 )

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iesnervion.keepitfitness.domain.model.Entrenamiento
+import com.iesnervion.keepitfitness.domain.model.EntrenamientoRealizado
 import com.iesnervion.keepitfitness.domain.usecase.FirebaseGetTrainingUseCase
 import com.iesnervion.keepitfitness.domain.usecase.FirebaseInsertUserTrainingUseCase
 import com.iesnervion.keepitfitness.util.Resource
@@ -39,7 +40,7 @@ class RealizarEntrenamientoViewModel @Inject constructor(
         }
     }
 
-    fun insertUserTraining(entrenamiento: Entrenamiento) {
+    fun insertUserTraining(entrenamiento: EntrenamientoRealizado) {
         viewModelScope.launch {
 
             insertUserTrainingUseCase(entrenamiento).onEach { state ->

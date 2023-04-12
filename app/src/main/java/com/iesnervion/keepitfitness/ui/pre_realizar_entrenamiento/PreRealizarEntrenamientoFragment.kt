@@ -65,7 +65,7 @@ class PreRealizarEntrenamientoFragment : Fragment() {
     }
 
     fun onItemSelected(exercise: EjercicioEntrenamiento) {
-        Toast.makeText(requireContext(), exercise.excersice.name, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), exercise.exercise.name, Toast.LENGTH_SHORT).show()
     }
 
     /**
