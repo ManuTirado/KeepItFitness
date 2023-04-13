@@ -1,17 +1,28 @@
 package com.iesnervion.keepitfitness.ui.configuration
 
+import android.content.Intent
+import android.graphics.Bitmap
+import android.icu.text.SimpleDateFormat
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
 import com.iesnervion.keepitfitness.R
 import com.iesnervion.keepitfitness.databinding.ActivityUserConfigurationBinding
 import com.iesnervion.keepitfitness.domain.model.User
 import com.iesnervion.keepitfitness.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class UserConfigurationActivity : AppCompatActivity() {
@@ -107,7 +118,41 @@ class UserConfigurationActivity : AppCompatActivity() {
                 user.username = etUsername.text.toString()
                 viewModel.updateUser(user)
             }
+            ivUserPhoto.setOnClickListener {
+                //selectImage()
+                photoPickerLauncher.launch("image/*")
+            }
         }
+    }
+
+    private var photoPickerLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) {
+            if (it != null) {
+                binding.ivUserPhoto.setImageURI(it)
+                uploadImage(it)
+            } else {
+                Toast.makeText(this, "Error obteniendo la foto", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    private fun uploadImage(uri: Uri) {
+        handleUserLoading(true)
+
+        val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
+        val now = Date()
+        val filename = formatter.format(now)
+
+        val storageReference = FirebaseStorage.getInstance().getReference("images/$filename")
+
+        storageReference.putFile(uri)
+            .addOnCompleteListener {
+                handleUserLoading(false)
+                if (it.isSuccessful) {
+                    Toast.makeText(this, "Foto subida correctamente", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Error al subir la foto", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 
     /**

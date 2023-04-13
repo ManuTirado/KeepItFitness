@@ -43,18 +43,18 @@
             android:layout_height="0dp">
 
             <com.google.android.material.imageview.ShapeableImageView
-                app:strokeWidth="3dp"
-                app:strokeColor="@color/black"
-                android:padding="2dp"
                 android:id="@+id/ivUserPhoto"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
+                android:padding="2dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+
+                app:strokeColor="@color/black"
+                app:strokeWidth="3dp"
                 tools:src="@drawable/ic_uknown_user" />
 
             <ProgressBar
@@ -63,10 +63,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:visibility="gone"
-                app:layout_constraintTop_toTopOf="@id/ivUserPhoto"
-                app:layout_constraintStart_toStartOf="@id/ivUserPhoto"
+                app:layout_constraintBottom_toBottomOf="@id/ivUserPhoto"
                 app:layout_constraintEnd_toEndOf="@id/ivUserPhoto"
-                app:layout_constraintBottom_toBottomOf="@id/ivUserPhoto"/>
+                app:layout_constraintStart_toStartOf="@id/ivUserPhoto"
+                app:layout_constraintTop_toTopOf="@id/ivUserPhoto" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilUsername"
@@ -110,9 +110,9 @@
                 android:id="@+id/bSaveChanges"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="40dp"
-                android:layout_marginHorizontal="16dp"
                 android:paddingVertical="14dp"
                 android:text="@string/home__save_changes_button"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -126,10 +126,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:visibility="gone"
-                app:layout_constraintTop_toTopOf="@id/bSaveChanges"
-                app:layout_constraintStart_toStartOf="@id/bSaveChanges"
+                app:layout_constraintBottom_toBottomOf="@id/bSaveChanges"
                 app:layout_constraintEnd_toEndOf="@id/bSaveChanges"
-                app:layout_constraintBottom_toBottomOf="@id/bSaveChanges"/>
+                app:layout_constraintStart_toStartOf="@id/bSaveChanges"
+                app:layout_constraintTop_toTopOf="@id/bSaveChanges" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
