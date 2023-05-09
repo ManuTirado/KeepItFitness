@@ -1,9 +1,11 @@
 package com.iesnervion.keepitfitness.di
 
 import com.iesnervion.keepitfitness.data.remote.FirebaseAuthRepositoryImpl
+import com.iesnervion.keepitfitness.data.remote.FirebaseStorageRepositoryImpl
 import com.iesnervion.keepitfitness.data.remote.FirestoreTrainsRepositoryImpl
 import com.iesnervion.keepitfitness.data.remote.FirestoreUserRepositoryImpl
 import com.iesnervion.keepitfitness.domain.repository.AuthRepository
+import com.iesnervion.keepitfitness.domain.repository.StorageRepository
 import com.iesnervion.keepitfitness.domain.repository.TrainRepository
 import com.iesnervion.keepitfitness.domain.repository.UserRepository
 import dagger.Binds
@@ -33,4 +35,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindTrainsRepository(trainRepository: FirestoreTrainsRepositoryImpl): TrainRepository
+
+    @Binds
+    abstract fun bindStorageRepository(storageRepository: FirebaseStorageRepositoryImpl): StorageRepository
 }

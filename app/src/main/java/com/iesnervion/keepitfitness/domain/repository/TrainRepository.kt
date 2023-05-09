@@ -1,6 +1,7 @@
 package com.iesnervion.keepitfitness.domain.repository
 
 import com.iesnervion.keepitfitness.domain.model.Entrenamiento
+import com.iesnervion.keepitfitness.domain.model.EntrenamientoRealizado
 
 interface TrainRepository {
 

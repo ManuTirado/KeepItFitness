@@ -7,6 +7,7 @@ import com.iesnervion.keepitfitness.data.util.FirebaseConstants.TRAININGS_COLLEC
 import com.iesnervion.keepitfitness.domain.model.Ejercicio
 import com.iesnervion.keepitfitness.domain.model.EjercicioEntrenamiento
 import com.iesnervion.keepitfitness.domain.model.Entrenamiento
+import com.iesnervion.keepitfitness.domain.model.EntrenamientoRealizado
 import com.iesnervion.keepitfitness.domain.repository.TrainRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -50,7 +51,6 @@ class FirestoreTrainsRepositoryImpl @Inject constructor(
                 ejercicios = ejercicios
             )
         }
-
     }
 
     override suspend fun getTraining(id: String): Entrenamiento {

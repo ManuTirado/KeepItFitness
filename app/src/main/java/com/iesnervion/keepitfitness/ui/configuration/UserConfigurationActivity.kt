@@ -1,28 +1,21 @@
 package com.iesnervion.keepitfitness.ui.configuration
 
-import android.content.Intent
-import android.graphics.Bitmap
-import android.icu.text.SimpleDateFormat
+import android.content.DialogInterface
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
-import com.google.firebase.storage.FirebaseStorage
 import com.iesnervion.keepitfitness.R
 import com.iesnervion.keepitfitness.databinding.ActivityUserConfigurationBinding
 import com.iesnervion.keepitfitness.domain.model.User
 import com.iesnervion.keepitfitness.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class UserConfigurationActivity : AppCompatActivity() {
@@ -32,6 +25,7 @@ class UserConfigurationActivity : AppCompatActivity() {
     private val viewModel: UserConfigurationViewModel by viewModels()
 
     private lateinit var user: User
+    private var newImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,11 +47,13 @@ class UserConfigurationActivity : AppCompatActivity() {
         viewModel.userState.observe(this) { state ->
             when (state) {
                 is Resource.Success -> {    // Si se recibe el usuario correctamente
+                    Log.i("Prueba", "Usuario recibido correctamente")
                     handleUserLoading(isLoading = false)
                     user = state.data
                     displayUserData(user)
                 }
                 is Resource.Error -> {      // Si ocurre un error al recibir el usuario
+                    Log.i("Prueba", "Error obteniendo al usuario")
                     handleUserLoading(isLoading = false)
                     binding.bSaveChanges.isEnabled = false
                     Toast.makeText(
@@ -73,6 +69,7 @@ class UserConfigurationActivity : AppCompatActivity() {
         viewModel.updatingState.observe(this) { state ->
             when (state) {
                 is Resource.Success -> {    // Si se actualiza el usuario correctamente
+                    Log.i("Prueba", "Usuario actualizado correctamente")
                     //viewModel.getUser()
                     handleUserUpdating(isLoading = false)
                     onBackPressedDispatcher.onBackPressed()
@@ -83,6 +80,54 @@ class UserConfigurationActivity : AppCompatActivity() {
                     ).show()
                 }
                 is Resource.Error -> {      // Si ocurre un error al actualizar el usuario
+                    Log.i("Prueba", "Error actualizando al usuario")
+                    handleUserUpdating(isLoading = false)
+                    Toast.makeText(
+                        this,
+                        state.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is Resource.Loading -> handleUserUpdating(isLoading = true)  // Si está cargando, se muestra el ProgressBar
+                else -> Unit    // Si no se hace nada
+            }
+        }
+        viewModel.uploadingState.observe(this) { state ->
+            when (state) {
+                is Resource.Success -> {    // Si se sube correctamente
+                    Log.i("Prueba", "Foto subida correctamente")
+                    handleUserUpdating(isLoading = false)
+                    viewModel.getImageURL()
+                }
+                is Resource.Error -> {      // Si ocurre un error al subir la foto
+                    Log.i("Prueba", "Error subiendo la foto")
+                    handleUserUpdating(isLoading = false)
+                    Toast.makeText(
+                        this,
+                        state.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is Resource.Loading -> handleUserUpdating(isLoading = true)  // Si está cargando, se muestra el ProgressBar
+                else -> Unit    // Si no se hace nada
+            }
+        }
+        viewModel.imageUrlState.observe(this) { state ->
+            when (state) {
+                is Resource.Success -> {    // Si se obtiene correctamente
+                    Log.i("Prueba", "URL obtenida correctamente")
+                    handleUserUpdating(isLoading = false)
+                    user.photo = state.data.toString()
+                    Log.i("Foto", user.photo)
+                    viewModel.updateUser(user)
+                    Toast.makeText(
+                        this,
+                        "Foto subida correctamente",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is Resource.Error -> {      // Si ocurre un error al obtener la URL de la foto
+                    Log.i("Prueba", "Error obteniendo la URL")
                     handleUserUpdating(isLoading = false)
                     Toast.makeText(
                         this,
@@ -97,11 +142,28 @@ class UserConfigurationActivity : AppCompatActivity() {
     }
 
     private fun displayUserData(user: User) {
+        Log.i("Prueba", "displayUserData")
         with(binding) {
             Glide.with(ivUserPhoto.context).load(user.photo).placeholder(R.drawable.ic_uknown_user)
                 .into(binding.ivUserPhoto)
             etUsername.setText(user.username)
             etPhotoUrl.setText(user.photo)
+        }
+
+        if (user.uid.isEmpty()) {
+            Log.i("Prueba", "isEmpty")
+            with(binding) {
+                etUsername.isEnabled = false
+                etPhotoUrl.isEnabled = false
+                bSaveChanges.isEnabled = false
+            }
+            showErrorAlert()
+        } else {
+            with(binding) {
+                etUsername.isEnabled = true
+                etPhotoUrl.isEnabled = true
+                bSaveChanges.isEnabled = true
+            }
         }
     }
 
@@ -114,12 +176,15 @@ class UserConfigurationActivity : AppCompatActivity() {
                 onBackPressedDispatcher.onBackPressed()
             }
             bSaveChanges.setOnClickListener {
-                user.photo = etPhotoUrl.text.toString()
+                //user.photo = etPhotoUrl.text.toString()
                 user.username = etUsername.text.toString()
-                viewModel.updateUser(user)
+                if (newImageUri != null) {
+                    viewModel.uploadImage(newImageUri!!)
+                } else {
+                    viewModel.updateUser(user)
+                }
             }
             ivUserPhoto.setOnClickListener {
-                //selectImage()
                 photoPickerLauncher.launch("image/*")
             }
         }
@@ -129,30 +194,28 @@ class UserConfigurationActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.GetContent()) {
             if (it != null) {
                 binding.ivUserPhoto.setImageURI(it)
-                uploadImage(it)
+                newImageUri = it
             } else {
                 Toast.makeText(this, "Error obteniendo la foto", Toast.LENGTH_SHORT).show()
             }
         }
 
-    private fun uploadImage(uri: Uri) {
-        handleUserLoading(true)
-
-        val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
-        val now = Date()
-        val filename = formatter.format(now)
-
-        val storageReference = FirebaseStorage.getInstance().getReference("images/$filename")
-
-        storageReference.putFile(uri)
-            .addOnCompleteListener {
-                handleUserLoading(false)
-                if (it.isSuccessful) {
-                    Toast.makeText(this, "Foto subida correctamente", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "Error al subir la foto", Toast.LENGTH_SHORT).show()
-                }
-            }
+    private fun showErrorAlert() {
+        Log.i("Prueba", "showErrorAlert")
+        val builder = AlertDialog.Builder(this)
+        builder
+            .setTitle("Error cargando los datos")
+            .setMessage("¿Qué desea hacer?")
+            .setPositiveButton("Recargar",
+                DialogInterface.OnClickListener { dialog, id ->
+                    viewModel.getUser()
+                })
+            .setNegativeButton("Volver",
+                DialogInterface.OnClickListener { dialog, id ->
+                    onBackPressedDispatcher.onBackPressed()
+                })
+        // Create the AlertDialog object and return it
+        builder.create().show()
     }
 
     /**

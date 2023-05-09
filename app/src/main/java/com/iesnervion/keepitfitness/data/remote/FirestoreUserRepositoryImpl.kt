@@ -1,16 +1,19 @@
 package com.iesnervion.keepitfitness.data.remote
 
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.iesnervion.keepitfitness.data.util.FirebaseConstants.EXERCISES_COLLECTION
+import com.iesnervion.keepitfitness.data.util.FirebaseConstants.TRAININGS_COLLECTION
 import com.iesnervion.keepitfitness.data.util.FirebaseConstants.USERS_COLLECTION
-import com.iesnervion.keepitfitness.domain.model.Entrenamiento
-import com.iesnervion.keepitfitness.domain.model.EntrenamientoRealizado
-import com.iesnervion.keepitfitness.domain.model.User
+import com.iesnervion.keepitfitness.domain.model.*
 import com.iesnervion.keepitfitness.domain.repository.UserRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class FirestoreUserRepositoryImpl @Inject constructor(
@@ -99,5 +102,27 @@ class FirestoreUserRepositoryImpl @Inject constructor(
             }
             .await()
         return  isSuccesful
+    }
+
+    override suspend fun getUserTrains(userId: String): List<EntrenamientoRealizado> {
+        val db = FirebaseFirestore.getInstance()
+        val userDocRef = db.collection(USERS_COLLECTION).document(userId)
+        val trainingsCollectionRef = userDocRef.collection("entrenamientos")
+
+        var trainings: List<EntrenamientoRealizado> = emptyList()
+
+        trainingsCollectionRef.get()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val trainingsList = mutableListOf<EntrenamientoRealizado>()
+                    for (document in it.result) {
+                        val entrenamiento = EntrenamientoRealizado.fromDocument(document)
+                        trainingsList.add(entrenamiento)
+                    }
+                    trainings = trainingsList.toList()
+                }
+            }.await()
+
+        return  trainings
     }
 }
