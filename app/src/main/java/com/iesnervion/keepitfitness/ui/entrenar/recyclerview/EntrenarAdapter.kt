@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.iesnervion.keepitfitness.R
 import com.iesnervion.keepitfitness.domain.model.Entrenamiento
+import com.iesnervion.keepitfitness.ui.progreso.recyclerview.ProgresoViewHolder
 
 class EntrenarAdapter(
     private var trainingList: List<Entrenamiento>,

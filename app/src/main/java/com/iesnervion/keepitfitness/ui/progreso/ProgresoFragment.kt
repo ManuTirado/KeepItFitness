@@ -16,18 +16,24 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.androidplot.Region
 import com.androidplot.ui.SeriesBundle
 import com.androidplot.xy.*
 import com.google.firebase.Timestamp
 import com.iesnervion.keepitfitness.databinding.FragmentProgresoBinding
+import com.iesnervion.keepitfitness.domain.model.Entrenamiento
 import com.iesnervion.keepitfitness.domain.model.EntrenamientoRealizado
+import com.iesnervion.keepitfitness.ui.entrenar.EntrenarFragmentDirections
+import com.iesnervion.keepitfitness.ui.entrenar.recyclerview.EntrenarAdapter
+import com.iesnervion.keepitfitness.ui.progreso.recyclerview.ProgresoAdapter
 import com.iesnervion.keepitfitness.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
 import java.text.FieldPosition
 import java.text.Format
 import java.text.ParsePosition
+import java.time.DayOfWeek
 import java.util.*
 import javax.annotation.meta.When
 import kotlin.random.Random
@@ -41,6 +47,7 @@ class ProgresoFragment : Fragment() {
     private var selection: Pair<Int, XYSeries>? = null
 
     private var trainings: List<EntrenamientoRealizado>? = null
+    private lateinit var recyclerAdapter: ProgresoAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,6 +73,63 @@ class ProgresoFragment : Fragment() {
         _binding = null
     }
 
+    private fun initRecyclerView(trainings: List<EntrenamientoRealizado>) {
+        //val manager = GridLayoutManager(this, 2)
+        val manager = LinearLayoutManager(requireContext())
+        //val decoration = DividerItemDecoration(requireContext(), manager.orientation)
+
+        binding.recyclerTraining.layoutManager = manager
+        recyclerAdapter = ProgresoAdapter(
+            trainings
+        ) { training -> onItemSelected(training) }
+        binding.recyclerTraining.adapter = recyclerAdapter
+
+        //binding.recyclerTraining.addItemDecoration(decoration)
+    }
+
+    private fun onItemSelected(entrenamiento: EntrenamientoRealizado) {
+        Toast.makeText(
+            requireContext(),
+            entrenamiento.fecha.toDate().toString(),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun loadTrainings(day: Int) {
+        var semana: MutableList<EntrenamientoRealizado> = mutableListOf()
+
+        val trainings = trainings
+        if (trainings != null) {
+            for (training in trainings) {
+                val cal = Calendar.getInstance()
+                cal.time = training.fecha.toDate()
+                val dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)
+                if (compareDayOfWeek(dayOfWeek, day)) {
+                    semana.add(training)
+                }
+            }
+            initRecyclerView(semana)
+
+            if (semana.isNotEmpty()) {
+                val fecha = semana.first().fecha.toDate()
+                binding.tvSelectedDate.text = "${fecha}"
+            } else {
+                binding.tvSelectedDate.text = "No hay entrenamientos"
+            }
+        } else {
+            binding.tvSelectedDate.text = "No hay entrenamientos"
+            Toast.makeText(requireContext(), "No trainings", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun compareDayOfWeek(dayOfWeek: Int, day: Int): Boolean {
+        // Convertimos el entero Day a la convención de DAY_OF_WEEK
+        val dayOfWeekFromDay = (day % 7) + 2
+
+        // Comparamos si ambos números enteros representan el mismo día de la semana
+        return dayOfWeek == dayOfWeekFromDay
+    }
+
     private fun initListeners() {
 
     }
@@ -76,7 +140,6 @@ class ProgresoFragment : Fragment() {
                 is Resource.Success -> {    // Si se obtienen los entrenamientos correctamente
                     getWeekTrainings(state.data)
                     handleLoading(isLoading = false)
-//                    setupGraph()
                 }
                 is Resource.Error -> {      // Si ocurre un error al obtener el listado
                     handleLoading(isLoading = false)
@@ -113,6 +176,7 @@ class ProgresoFragment : Fragment() {
             val cal = Calendar.getInstance()
             cal.time = training.fecha.toDate()
             val dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)
+
             when (dayOfWeek) {
                 2 -> {  // Lunes
                     val totalTime = semana[0] + convertTimeStringToMinutes(training.time)
@@ -366,11 +430,15 @@ class ProgresoFragment : Fragment() {
             selection = null
         }
         if (selection != null) {
+//            val txt: String =
+//                "Selected: " + selection?.second?.title +
+//                        " Value: " + selection?.second?.getY(selection?.first ?: 0) +
+//                        " Domain: " + selection?.firstval
             val txt: String =
-                "Selected: " + selection?.second?.title +
-                        " Value: " + selection?.second?.getY(selection?.first ?: 0) +
-                        " Domain: " + selection?.first
+                " Domain: " + selection?.first
             Toast.makeText(requireContext(), txt, Toast.LENGTH_SHORT).show()
+
+            loadTrainings(selection?.first ?: 0)
         }
     }
 
