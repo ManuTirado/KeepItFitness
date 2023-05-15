@@ -16,16 +16,14 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androidplot.Region
 import com.androidplot.ui.SeriesBundle
 import com.androidplot.xy.*
 import com.google.firebase.Timestamp
 import com.iesnervion.keepitfitness.databinding.FragmentProgresoBinding
-import com.iesnervion.keepitfitness.domain.model.Entrenamiento
 import com.iesnervion.keepitfitness.domain.model.EntrenamientoRealizado
-import com.iesnervion.keepitfitness.ui.entrenar.EntrenarFragmentDirections
-import com.iesnervion.keepitfitness.ui.entrenar.recyclerview.EntrenarAdapter
 import com.iesnervion.keepitfitness.ui.progreso.recyclerview.ProgresoAdapter
 import com.iesnervion.keepitfitness.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,10 +31,7 @@ import java.text.DecimalFormat
 import java.text.FieldPosition
 import java.text.Format
 import java.text.ParsePosition
-import java.time.DayOfWeek
 import java.util.*
-import javax.annotation.meta.When
-import kotlin.random.Random
 
 @AndroidEntryPoint
 class ProgresoFragment : Fragment() {
@@ -49,6 +44,7 @@ class ProgresoFragment : Fragment() {
     private var trainings: List<EntrenamientoRealizado>? = null
     private lateinit var recyclerAdapter: ProgresoAdapter
 
+    // region LifeCycle
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -73,62 +69,7 @@ class ProgresoFragment : Fragment() {
         _binding = null
     }
 
-    private fun initRecyclerView(trainings: List<EntrenamientoRealizado>) {
-        //val manager = GridLayoutManager(this, 2)
-        val manager = LinearLayoutManager(requireContext())
-        //val decoration = DividerItemDecoration(requireContext(), manager.orientation)
-
-        binding.recyclerTraining.layoutManager = manager
-        recyclerAdapter = ProgresoAdapter(
-            trainings
-        ) { training -> onItemSelected(training) }
-        binding.recyclerTraining.adapter = recyclerAdapter
-
-        //binding.recyclerTraining.addItemDecoration(decoration)
-    }
-
-    private fun onItemSelected(entrenamiento: EntrenamientoRealizado) {
-        Toast.makeText(
-            requireContext(),
-            entrenamiento.fecha.toDate().toString(),
-            Toast.LENGTH_SHORT
-        ).show()
-    }
-
-    private fun loadTrainings(day: Int) {
-        var semana: MutableList<EntrenamientoRealizado> = mutableListOf()
-
-        val trainings = trainings
-        if (trainings != null) {
-            for (training in trainings) {
-                val cal = Calendar.getInstance()
-                cal.time = training.fecha.toDate()
-                val dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)
-                if (compareDayOfWeek(dayOfWeek, day)) {
-                    semana.add(training)
-                }
-            }
-            initRecyclerView(semana)
-
-            if (semana.isNotEmpty()) {
-                val fecha = semana.first().fecha.toDate()
-                binding.tvSelectedDate.text = "${fecha}"
-            } else {
-                binding.tvSelectedDate.text = "No hay entrenamientos"
-            }
-        } else {
-            binding.tvSelectedDate.text = "No hay entrenamientos"
-            Toast.makeText(requireContext(), "No trainings", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun compareDayOfWeek(dayOfWeek: Int, day: Int): Boolean {
-        // Convertimos el entero Day a la convención de DAY_OF_WEEK
-        val dayOfWeekFromDay = (day % 7) + 2
-
-        // Comparamos si ambos números enteros representan el mismo día de la semana
-        return dayOfWeek == dayOfWeekFromDay
-    }
+    // endregion
 
     private fun initListeners() {
 
@@ -155,13 +96,86 @@ class ProgresoFragment : Fragment() {
         }
     }
 
+    /**
+     * Gestiona la visibilidad del ProgressBar.
+     * @param isLoading Booleano que indica si está cargando o no.
+     */
+    private fun handleLoading(isLoading: Boolean) {
+        with(binding) {
+            if (isLoading) {
+//                bNextExercise.text = ""
+//                bNextExercise.isEnabled = false
+                pbChart.visibility = View.VISIBLE
+            } else {
+                pbChart.visibility = View.GONE
+//                bNextExercise.text = getString(R.string.home__next_exercise_button)
+//                bNextExercise.isEnabled = true
+            }
+        }
+    }
+
+    // region RecyclerView
+
+    private fun initRecyclerView(trainings: List<EntrenamientoRealizado>) {
+        //val manager = GridLayoutManager(this, 2)
+        val manager = LinearLayoutManager(requireContext())
+        //val decoration = DividerItemDecoration(requireContext(), manager.orientation)
+
+        binding.recyclerTraining.layoutManager = manager
+        recyclerAdapter = ProgresoAdapter(
+            trainings
+        ) { training -> onItemSelected(training) }
+        binding.recyclerTraining.adapter = recyclerAdapter
+
+        //binding.recyclerTraining.addItemDecoration(decoration)
+    }
+
+    private fun onItemSelected(entrenamiento: EntrenamientoRealizado) {
+        val action = ProgresoFragmentDirections.actionProgresoFragmentToDetalleEntrenamientoFragment(entrenamiento)
+        findNavController().navigate(action)
+    }
+
+    private fun loadTrainings(day: Int) {
+        var semana: MutableList<EntrenamientoRealizado> = mutableListOf()
+
+        val trainings = trainings
+        if (trainings != null) {
+            for (training in trainings) {
+                val cal = Calendar.getInstance()
+                cal.time = training.fecha
+                val dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)
+                if (compareDayOfWeek(dayOfWeek, day)) {
+                    semana.add(training)
+                }
+            }
+            initRecyclerView(semana)
+
+            if (semana.isNotEmpty()) {
+                val fecha = semana.first().fecha
+                binding.tvSelectedDate.text = "${fecha}"
+            } else {
+                binding.tvSelectedDate.text = "No hay entrenamientos"
+            }
+        } else {
+            binding.tvSelectedDate.text = "No hay entrenamientos"
+        }
+    }
+
+    private fun compareDayOfWeek(dayOfWeek: Int, day: Int): Boolean {
+        // Convertimos el entero Day a la convención de DAY_OF_WEEK
+        val dayOfWeekFromDay = (day % 7) + 2
+
+        // Comparamos si ambos números enteros representan el mismo día de la semana
+        return dayOfWeek == dayOfWeekFromDay
+    }
+
     private fun getWeekTrainings(trainings: List<EntrenamientoRealizado>) {
         val mondayAndSunday = getStartAndEndOfWeek()
         val monday = mondayAndSunday.first
         val sunday = mondayAndSunday.second
         val weekTrainings = mutableListOf<EntrenamientoRealizado>()
         for (training in trainings) {
-            if (isTimestampBetweenDates(training.fecha, monday, sunday)) {
+            if (isTimestampBetweenDates(Timestamp(training.fecha), monday, sunday)) {
                 weekTrainings.add(training)
             }
         }
@@ -174,7 +188,7 @@ class ProgresoFragment : Fragment() {
         var semana: MutableList<Float> = mutableListOf(0f, 0f, 0f, 0f, 0f, 0f, 0f)
         for (training in list) {
             val cal = Calendar.getInstance()
-            cal.time = training.fecha.toDate()
+            cal.time = training.fecha
             val dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)
 
             when (dayOfWeek) {
@@ -254,23 +268,9 @@ class ProgresoFragment : Fragment() {
         return date.time in startDate.time..endDate.time
     }
 
-    /**
-     * Gestiona la visibilidad del ProgressBar.
-     * @param isLoading Booleano que indica si está cargando o no.
-     */
-    private fun handleLoading(isLoading: Boolean) {
-        with(binding) {
-            if (isLoading) {
-//                bNextExercise.text = ""
-//                bNextExercise.isEnabled = false
-                pbChart.visibility = View.VISIBLE
-            } else {
-                pbChart.visibility = View.GONE
-//                bNextExercise.text = getString(R.string.home__next_exercise_button)
-//                bNextExercise.isEnabled = true
-            }
-        }
-    }
+    // endregion
+
+    // region Graph
 
     private fun setupGraph(dataList: List<Float>?) {
         val seriesNumber: List<Float> = if (dataList.isNullOrEmpty()) {
@@ -434,10 +434,6 @@ class ProgresoFragment : Fragment() {
 //                "Selected: " + selection?.second?.title +
 //                        " Value: " + selection?.second?.getY(selection?.first ?: 0) +
 //                        " Domain: " + selection?.firstval
-            val txt: String =
-                " Domain: " + selection?.first
-            Toast.makeText(requireContext(), txt, Toast.LENGTH_SHORT).show()
-
             loadTrainings(selection?.first ?: 0)
         }
     }
@@ -446,4 +442,7 @@ class ProgresoFragment : Fragment() {
         val dpi = resources.displayMetrics.xdpi
         return num * (dpi / 160)
     }
+
+    // endregion
+
 }

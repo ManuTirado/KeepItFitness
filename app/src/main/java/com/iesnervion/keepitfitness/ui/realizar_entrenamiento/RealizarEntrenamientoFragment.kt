@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.iesnervion.keepitfitness.R
@@ -30,6 +31,7 @@ class RealizarEntrenamientoFragment : Fragment() {
     private lateinit var entrenamiento: Entrenamiento
     private var ejerciciosRealizados: MutableList<EjercicioEntrenamiento> = arrayListOf()
     private var indiceEjercicioActual: Int = 0
+    private var entrenamientoRealizado: EntrenamientoRealizado? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,7 +78,8 @@ class RealizarEntrenamientoFragment : Fragment() {
                     handleLoading(isLoading = false)
                     Toast.makeText(requireContext(), "Insertado con éxito", Toast.LENGTH_SHORT)
                         .show()
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                    val action = RealizarEntrenamientoFragmentDirections.actionRealizarEntrenamientoFragmentToDetalleEntrenamientoFragment2(entrenamientoRealizado ?: EntrenamientoRealizado())
+                    findNavController().navigate(action)
                 }
                 is Resource.Error -> {      // Si ocurre un error al insertar el entrenamiento
                     handleLoading(isLoading = false)
@@ -118,6 +121,7 @@ class RealizarEntrenamientoFragment : Fragment() {
             time = time,
             ejercicios = entrenamiento.ejercicios
         )
+        this.entrenamientoRealizado = entrenamientoRealizado
 
         viewModel.insertUserTraining(entrenamientoRealizado)
     }

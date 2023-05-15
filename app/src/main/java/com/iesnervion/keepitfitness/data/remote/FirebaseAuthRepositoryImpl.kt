@@ -1,8 +1,10 @@
 package com.iesnervion.keepitfitness.data.remote
 
 import com.google.firebase.auth.FirebaseAuth
+import com.iesnervion.keepitfitness.data.util.FirebaseConstants
 import com.iesnervion.keepitfitness.domain.repository.AuthRepository
 import com.iesnervion.keepitfitness.util.Resource
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -24,6 +26,7 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
                     userUID = it.user?.uid ?: ""
                 }
                 .await()
+            delay(FirebaseConstants.TIME)
             userUID
         } catch (e: Exception) {
             ""
@@ -44,6 +47,7 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
                     userUID = it.user?.uid ?: ""
                 }
                 .await()
+            delay(FirebaseConstants.TIME)
             userUID
         } catch (e: Exception) {
             ""

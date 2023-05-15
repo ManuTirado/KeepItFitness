@@ -1,13 +1,10 @@
 package com.iesnervion.keepitfitness.ui.configuration
 
 import android.net.Uri
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.storage.FirebaseStorage
 import com.iesnervion.keepitfitness.domain.model.User
 import com.iesnervion.keepitfitness.domain.usecase.FirebaseGetUserUseCase
 import com.iesnervion.keepitfitness.domain.usecase.FirebaseUpdateUserUseCase

@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 import com.iesnervion.keepitfitness.R
 import com.iesnervion.keepitfitness.databinding.FragmentLoginBinding
 import com.iesnervion.keepitfitness.util.Resource

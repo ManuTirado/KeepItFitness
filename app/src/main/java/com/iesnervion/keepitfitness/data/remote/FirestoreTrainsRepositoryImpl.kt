@@ -2,6 +2,7 @@ package com.iesnervion.keepitfitness.data.remote
 
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import com.iesnervion.keepitfitness.data.util.FirebaseConstants
 import com.iesnervion.keepitfitness.data.util.FirebaseConstants.EXERCISES_COLLECTION
 import com.iesnervion.keepitfitness.data.util.FirebaseConstants.TRAININGS_COLLECTION
 import com.iesnervion.keepitfitness.domain.model.Ejercicio
@@ -10,6 +11,7 @@ import com.iesnervion.keepitfitness.domain.model.Entrenamiento
 import com.iesnervion.keepitfitness.domain.model.EntrenamientoRealizado
 import com.iesnervion.keepitfitness.domain.repository.TrainRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -125,6 +127,7 @@ class FirestoreTrainsRepositoryImpl @Inject constructor(
                 isSucces = false
                 Log.w("FirestoreTrainsRepositoryImpl", "Error adding document", e)
             }.await()
+        delay(FirebaseConstants.TIME)
         return isSucces
     }
 }

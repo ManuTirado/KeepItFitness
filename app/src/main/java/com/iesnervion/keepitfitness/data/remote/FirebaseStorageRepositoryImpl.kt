@@ -5,9 +5,11 @@ import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
+import com.iesnervion.keepitfitness.data.util.FirebaseConstants
 import com.iesnervion.keepitfitness.data.util.FirebaseConstants.IMAGES_FOLDER_NAME
 import com.iesnervion.keepitfitness.domain.repository.AuthRepository
 import com.iesnervion.keepitfitness.domain.repository.StorageRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.tasks.await
 import java.net.URI
 import javax.inject.Inject
@@ -28,6 +30,7 @@ class FirebaseStorageRepositoryImpl @Inject constructor(
             .addOnCompleteListener {
                 isSuccesfull = it.isSuccessful
             }.await()
+        delay(FirebaseConstants.TIME)
         return isSuccesfull
     }
 
@@ -38,7 +41,7 @@ class FirebaseStorageRepositoryImpl @Inject constructor(
         storageRef.downloadUrl.addOnSuccessListener {
             uri = it
         }.await()
-
+        delay(FirebaseConstants.TIME)
         return uri
     }
 

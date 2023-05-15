@@ -13,6 +13,10 @@
         <action
             android:id="@+id/action_preRealizarEntrenamientoFragment_to_realizarEntrenamientoFragment"
             app:destination="@id/realizarEntrenamientoFragment" />
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/realizarEntrenamientoFragment"
@@ -23,5 +27,23 @@
             android:name="id"
             app:argType="string"
             app:nullable="false" />
+        <action
+            android:id="@+id/action_realizarEntrenamientoFragment_to_detalleEntrenamientoFragment2"
+            app:destination="@id/detalleEntrenamientoResumenFragment" />
+        <action
+            android:id="@+id/action_realizarEntrenamientoFragment_to_detalleEntrenamientoResumenFragment"
+            app:destination="@id/detalleEntrenamientoResumenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detalleEntrenamientoResumenFragment"
+        android:name="com.iesnervion.keepitfitness.ui.detalleEntrenamiento.DetalleEntrenamientoResumenFragment"
+        android:label="DetalleEntrenamientoResumenFragment" >
+        <argument
+            android:name="training"
+            app:argType="com.iesnervion.keepitfitness.domain.model.EntrenamientoRealizado" />
+        <action
+            android:id="@+id/action_detalleEntrenamientoResumenFragment_to_preRealizarEntrenamientoFragment"
+            app:destination="@id/preRealizarEntrenamientoFragment"
+            app:popUpTo="@id/preRealizarEntrenamientoFragment" />
     </fragment>
 </navigation>

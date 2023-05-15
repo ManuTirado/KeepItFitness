@@ -47,7 +47,13 @@ class PreRealizarEntrenamientoFragment : Fragment() {
         initObservers()
         initListeners()
 
-        viewModel.getTrain(args.id)
+        val id = args.id
+        if (id != null) {
+            viewModel.getTrain(id)
+        } else {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+
     }
 
     private fun initRecyclerView(exercises: List<EjercicioEntrenamiento>) {
@@ -100,7 +106,7 @@ class PreRealizarEntrenamientoFragment : Fragment() {
                 activity?.onBackPressedDispatcher?.onBackPressed()
             }
             bStartTraining.setOnClickListener {
-                val action = PreRealizarEntrenamientoFragmentDirections.actionPreRealizarEntrenamientoFragmentToRealizarEntrenamientoFragment(args.id)
+                val action = PreRealizarEntrenamientoFragmentDirections.actionPreRealizarEntrenamientoFragmentToRealizarEntrenamientoFragment(args.id ?: "0")
                 findNavController().navigate(action)
             }
         }

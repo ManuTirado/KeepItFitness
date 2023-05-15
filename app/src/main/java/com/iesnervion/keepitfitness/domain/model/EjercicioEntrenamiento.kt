@@ -1,10 +1,13 @@
 package com.iesnervion.keepitfitness.domain.model
 
+import java.io.Serializable
+
 data class EjercicioEntrenamiento(
     var exercise: Ejercicio = Ejercicio(),
     var reps: Long = 0,
     var weight: Long = 0
-) {
+) : Serializable
+{
     companion object {
         fun fromMap(map: Map<String, Any>): EjercicioEntrenamiento {
             val reps = map["reps"] as? Long ?: 0

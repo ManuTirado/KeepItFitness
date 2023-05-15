@@ -31,6 +31,6 @@
         <argument
             android:name="id"
             app:argType="string"
-            app:nullable="false" />
+            app:nullable="true" />
     </activity>
 </navigation>

@@ -1,5 +1,6 @@
 package com.iesnervion.keepitfitness.data.remote
 
+import android.util.Log
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -7,11 +8,13 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.iesnervion.keepitfitness.data.util.FirebaseConstants.EXERCISES_COLLECTION
+import com.iesnervion.keepitfitness.data.util.FirebaseConstants.TIME
 import com.iesnervion.keepitfitness.data.util.FirebaseConstants.TRAININGS_COLLECTION
 import com.iesnervion.keepitfitness.data.util.FirebaseConstants.USERS_COLLECTION
 import com.iesnervion.keepitfitness.domain.model.*
 import com.iesnervion.keepitfitness.domain.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -33,6 +36,7 @@ class FirestoreUserRepositoryImpl @Inject constructor(
                 .set(user, SetOptions.merge())
                 .addOnCompleteListener { isSuccesfull = it.isSuccessful }
                 .await()
+            delay(TIME)
             isSuccesfull
         } catch (e: Exception) {
             false
@@ -55,6 +59,7 @@ class FirestoreUserRepositoryImpl @Inject constructor(
                     loggedUser = it.toObject(User::class.java)!!
                 }
                 .await()
+            delay(TIME)
             loggedUser
         } catch (e: Exception) {
             User()
@@ -101,6 +106,7 @@ class FirestoreUserRepositoryImpl @Inject constructor(
                 isSuccesful = false
             }
             .await()
+        delay(TIME)
         return  isSuccesful
     }
 
@@ -122,7 +128,7 @@ class FirestoreUserRepositoryImpl @Inject constructor(
                     trainings = trainingsList.toList()
                 }
             }.await()
-
+        delay(TIME)
         return  trainings
     }
 }

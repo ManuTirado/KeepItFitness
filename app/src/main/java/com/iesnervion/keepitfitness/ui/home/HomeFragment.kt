@@ -6,11 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavGraph
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.NavigationUI
-import com.iesnervion.keepitfitness.R
 import com.iesnervion.keepitfitness.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 

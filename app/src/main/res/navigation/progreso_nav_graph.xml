@@ -13,10 +13,28 @@
         <action
             android:id="@+id/action_to_userConfigurationActivity"
             app:destination="@id/userConfigurationActivity" />
+        <action
+            android:id="@+id/action_progresoFragment_to_detalleEntrenamientoFragment"
+            app:destination="@id/detalleEntrenamientoProgresoFragment" />
+        <action
+            android:id="@+id/action_progresoFragment_to_detalleEntrenamientoProgresoFragment2"
+            app:destination="@id/detalleEntrenamientoProgresoFragment" />
     </fragment>
     <activity
         android:id="@+id/userConfigurationActivity"
         android:name="com.iesnervion.keepitfitness.ui.configuration.UserConfigurationActivity"
         android:label="activity_user_configuration"
         tools:layout="@layout/activity_user_configuration" />
+    <fragment
+        android:id="@+id/detalleEntrenamientoProgresoFragment"
+        android:name="com.iesnervion.keepitfitness.ui.detalleEntrenamiento.DetalleEntrenamientoProgresoFragment"
+        android:label="DetalleEntrenamientoProgresoFragment" >
+        <action
+            android:id="@+id/action_detalleEntrenamientoProgresoFragment_to_progresoFragment"
+            app:destination="@id/progresoFragment"
+            app:popUpTo="@id/progresoFragment" />
+        <argument
+            android:name="training"
+            app:argType="com.iesnervion.keepitfitness.domain.model.EntrenamientoRealizado" />
+    </fragment>
 </navigation>
