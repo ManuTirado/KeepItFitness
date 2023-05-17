@@ -13,10 +13,18 @@
         <action
             android:id="@+id/action_to_userConfigurationActivity"
             app:destination="@id/userConfigurationActivity" />
+        <action
+            android:id="@+id/action_entrenamientosFragment_to_insertarEditarEntrenamiento"
+            app:destination="@id/insertarEditarEntrenamiento" />
     </fragment>
     <activity
         android:id="@+id/userConfigurationActivity"
         android:name="com.iesnervion.keepitfitness.ui.configuration.UserConfigurationActivity"
         android:label="activity_user_configuration"
         tools:layout="@layout/activity_user_configuration" />
+    <activity
+        android:id="@+id/insertarEditarEntrenamiento"
+        android:name="com.iesnervion.keepitfitness.ui.InsertarEditarEntrenamientoActivity"
+        android:label="activity_insertar_editar_entrenamiento"
+        tools:layout="@layout/activity_insertar_editar_entrenamiento" />
 </navigation>

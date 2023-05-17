@@ -26,8 +26,7 @@ class RealizarEntrenamientoActivity : AppCompatActivity() {
         val bundle:Bundle = Bundle()
         bundle.putString("id", args.id)
 
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.mainFragmentContainer) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainFragmentContainer) as NavHostFragment
 
         navHostFragment.navController.setGraph(R.navigation.realizar_entrenamiento_nav_graph, bundle)
     }

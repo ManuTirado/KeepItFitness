@@ -131,4 +131,70 @@ class FirestoreUserRepositoryImpl @Inject constructor(
         delay(TIME)
         return  trainings
     }
+
+    override suspend fun insertPersonalizedTrainingToUserDocument(
+        training: Entrenamiento,
+        userId: String
+    ): Boolean {
+        var isSuccesful = false
+        val db = FirebaseFirestore.getInstance()
+        val userDocRef = db.collection(USERS_COLLECTION).document(userId)
+        val trainingDocRef = userDocRef.collection("entrenamientosPersonalizados")
+
+        db.runTransaction { transaction ->
+            // Obtenemos el documento del usuario y verificamos que exista
+            val userDoc = transaction.get(userDocRef)
+            if (!userDoc.exists()) {
+                throw Exception("El usuario no existe")
+            }
+
+            // Añadimos el entrenamiento a la lista de entrenamientos del usuario
+            val newTrainingDocRef = trainingDocRef.document()
+            val newTrainingId = training.id
+            transaction.update(
+                userDocRef,
+                "entrenamientosPersonalizados",
+                FieldValue.arrayUnion(newTrainingId)
+            )
+
+            // Insertamos el entrenamiento en su colección correspondiente
+            transaction.set(newTrainingDocRef, training)
+
+            // Devolvemos null, ya que no necesitamos retornar nada de la transacción
+            null
+        }
+            .addOnSuccessListener {
+                // El entrenamiento se ha insertado correctamente
+                isSuccesful = true
+            }
+            .addOnFailureListener { exception ->
+                // Ha ocurrido un error al insertar el entrenamiento
+                isSuccesful = false
+            }
+            .await()
+        delay(TIME)
+        return  isSuccesful
+    }
+
+    override suspend fun getUserPersonalizedTrains(userId: String): List<Entrenamiento> {
+        val db = FirebaseFirestore.getInstance()
+        val userDocRef = db.collection(USERS_COLLECTION).document(userId)
+        val trainingsCollectionRef = userDocRef.collection("entrenamientosPersonalizados")
+
+        var trainings: List<Entrenamiento> = emptyList()
+
+        trainingsCollectionRef.get()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val trainingsList = mutableListOf<Entrenamiento>()
+                    for (document in it.result) {
+                        val entrenamiento = Entrenamiento.fromDocument(document)
+                        trainingsList.add(entrenamiento)
+                    }
+                    trainings = trainingsList.toList()
+                }
+            }.await()
+        delay(TIME)
+        return trainings
+    }
 }

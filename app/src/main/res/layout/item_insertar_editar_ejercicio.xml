@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivExercisePhoto"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/ic_dumbbell"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/black"
+            android:padding="1dp"
+            app:contentPadding="10dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
+
+        <TextView
+            android:id="@+id/tvExerciseName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivExercisePhoto"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tvX"
+            tools:text="Curl de Biceps" />
+
+        <TextView
+            android:id="@+id/tvExerciseWeight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:textAlignment="textEnd"
+
+            app:layout_constraintStart_toEndOf="@id/ivExercisePhoto"
+            app:layout_constraintTop_toBottomOf="@+id/tvExerciseName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvX"
+            tools:text="15kg" />
+
+        <TextView
+            android:id="@+id/tvX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_marginHorizontal="10dp"
+
+
+            app:layout_constraintStart_toEndOf="@+id/tvExerciseWeight"
+            app:layout_constraintTop_toBottomOf="@+id/tvExerciseName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvExerciseReps"
+            android:text="x" />
+
+        <TextView
+            android:id="@+id/tvExerciseReps"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            android:textAlignment="textStart"
+
+
+            app:layout_constraintStart_toEndOf="@+id/tvX"
+            app:layout_constraintTop_toBottomOf="@+id/tvExerciseName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="8" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

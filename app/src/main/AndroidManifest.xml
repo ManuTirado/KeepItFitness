@@ -15,6 +15,9 @@
         android:theme="@style/Theme.KeepItFitness"
         tools:targetApi="31">
         <activity
+            android:name=".ui.InsertarEditarEntrenamientoActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.RealizarEntrenamientoActivity"
             android:exported="false" />
         <activity

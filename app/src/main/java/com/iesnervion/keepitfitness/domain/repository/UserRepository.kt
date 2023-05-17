@@ -23,4 +23,8 @@ interface UserRepository {
     suspend fun insertTrainingToUserDocument(training: EntrenamientoRealizado, userId: String): Boolean
 
     suspend fun getUserTrains(userId: String): List<EntrenamientoRealizado>
+
+    suspend fun insertPersonalizedTrainingToUserDocument(training: Entrenamiento, userId: String): Boolean
+
+    suspend fun getUserPersonalizedTrains(userId: String): List<Entrenamiento>
 }

@@ -9,16 +9,17 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class FirebaseInsertUserTrainingUseCase @Inject constructor(
+class InsertPersonalizedTrainingUseCase @Inject constructor(
     private val userRepository: UserRepository,
     private val auth: FirebaseAuth
 ) {
-    suspend operator fun invoke(entrenamiento: EntrenamientoRealizado): Flow<Resource<Boolean>> = flow {
+
+    suspend operator fun invoke(entrenamiento: Entrenamiento): Flow<Resource<Boolean>> = flow {
 
         try {
             emit(Resource.Loading)
 
-            val isSuccess = userRepository.insertTrainingToUserDocument(entrenamiento, auth.uid.toString())
+            val isSuccess = userRepository.insertPersonalizedTrainingToUserDocument(entrenamiento, auth.uid.toString())
             emit(Resource.Success(isSuccess))
             emit(Resource.Finished)
         } catch (e: Exception) {

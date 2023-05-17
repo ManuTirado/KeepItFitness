@@ -36,5 +36,8 @@
         <argument
             android:name="training"
             app:argType="com.iesnervion.keepitfitness.domain.model.EntrenamientoRealizado" />
+        <action
+            android:id="@+id/action_to_userConfigurationActivity"
+            app:destination="@id/userConfigurationActivity" />
     </fragment>
 </navigation>

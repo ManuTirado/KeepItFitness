@@ -8,12 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.iesnervion.keepitfitness.databinding.FragmentEntrenamientosBinding
 import com.iesnervion.keepitfitness.domain.model.Ejercicio
 import com.iesnervion.keepitfitness.domain.model.EjercicioEntrenamiento
 import com.iesnervion.keepitfitness.domain.model.Entrenamiento
 import com.iesnervion.keepitfitness.ui.entrenamientos.adapter.EntrenamientosAdapter
+import com.iesnervion.keepitfitness.ui.entrenar.EntrenarFragmentDirections
 import com.iesnervion.keepitfitness.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -101,7 +103,10 @@ class EntrenamientosFragment : Fragment() {
      */
     private fun initListeners() {
         with(binding) {
-
+            btnAdd.setOnClickListener {
+                val action = EntrenamientosFragmentDirections.actionEntrenamientosFragmentToInsertarEditarEntrenamiento()
+                findNavController().navigate(action)
+            }
         }
     }
 
@@ -123,44 +128,44 @@ class EntrenamientosFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-    private fun insertarEntrenamientoPrueba() {
-        viewModel.insertTraining(Entrenamiento(
-            id = "avanzado",
-            desc = "Para los mama hierros más fuertes que el vinagre, deberías de mirartelo, ahora en serio",
-            time = "30:00",
-            listOf(
-                EjercicioEntrenamiento(
-                    exercise = Ejercicio(id = "1", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/curl-biceps.jpg", name = "curl de biceps", type = "brazo"),
-                    reps = 10,
-                    weight = 12,
-                ),
-                EjercicioEntrenamiento(
-                    exercise = Ejercicio(id = "3", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/sentadilla.jpg", name = "sentadilla", type = "pierna"),
-                    reps = 20,
-                    weight = 30
-                ),
-                EjercicioEntrenamiento(
-                    exercise = Ejercicio(id = "2", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/pressbanca.png", name = "press de banca", type = "pecho"),
-                    reps = 12,
-                    weight = 30
-                ),
-                EjercicioEntrenamiento(
-                    exercise = Ejercicio(id = "1", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/curl-biceps.jpg", name = "curl de biceps", type = "brazo"),
-                    reps = 10,
-                    weight = 12
-                ),
-                EjercicioEntrenamiento(
-                    exercise = Ejercicio(id = "3", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/sentadilla.jpg", name = "sentadilla", type = "pierna"),
-                    reps = 20,
-                    weight = 30
-                ),
-                EjercicioEntrenamiento(
-                    exercise = Ejercicio(id = "2", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/pressbanca.png", name = "press de banca", type = "pecho"),
-                    reps = 12,
-                    weight = 30
-                )
-            )
-        ))
-    }
+//
+//    private fun insertarEntrenamientoPrueba() {
+//        viewModel.insertTraining(Entrenamiento(
+//            id = "avanzado",
+//            desc = "Para los mama hierros más fuertes que el vinagre, deberías de mirartelo, ahora en serio",
+//            time = "30:00",
+//            listOf(
+//                EjercicioEntrenamiento(
+//                    exercise = Ejercicio(id = "1", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/curl-biceps.jpg", name = "curl de biceps", type = "brazo"),
+//                    reps = 10,
+//                    weight = 12,
+//                ),
+//                EjercicioEntrenamiento(
+//                    exercise = Ejercicio(id = "3", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/sentadilla.jpg", name = "sentadilla", type = "pierna"),
+//                    reps = 20,
+//                    weight = 30
+//                ),
+//                EjercicioEntrenamiento(
+//                    exercise = Ejercicio(id = "2", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/pressbanca.png", name = "press de banca", type = "pecho"),
+//                    reps = 12,
+//                    weight = 30
+//                ),
+//                EjercicioEntrenamiento(
+//                    exercise = Ejercicio(id = "1", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/curl-biceps.jpg", name = "curl de biceps", type = "brazo"),
+//                    reps = 10,
+//                    weight = 12
+//                ),
+//                EjercicioEntrenamiento(
+//                    exercise = Ejercicio(id = "3", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/sentadilla.jpg", name = "sentadilla", type = "pierna"),
+//                    reps = 20,
+//                    weight = 30
+//                ),
+//                EjercicioEntrenamiento(
+//                    exercise = Ejercicio(id = "2", photo = "https://raw.githubusercontent.com/ManuelTirado/Fotos/main/pressbanca.png", name = "press de banca", type = "pecho"),
+//                    reps = 12,
+//                    weight = 30
+//                )
+//            )
+//        ))
+//    }
 }
