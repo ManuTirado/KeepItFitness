@@ -6,7 +6,7 @@
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.iesnervion.keepitfitness.ui.login.LoginFragment"
+        android:name="com.iesnervion.keepitfitness.ui.authentication.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.iesnervion.keepitfitness.ui.signup.SignUpFragment"
+        android:name="com.iesnervion.keepitfitness.ui.authentication.signup.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" />
     <fragment
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/passwordRecoveryFragment"
-        android:name="com.iesnervion.keepitfitness.ui.password_recovery.PasswordRecoveryFragment"
+        android:name="com.iesnervion.keepitfitness.ui.authentication.password_recovery.PasswordRecoveryFragment"
         android:label="fragment_password_recovery"
         tools:layout="@layout/fragment_password_recovery" />
     <activity

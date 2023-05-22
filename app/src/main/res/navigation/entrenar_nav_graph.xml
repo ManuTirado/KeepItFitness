@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/entrenarFragment"
-        android:name="com.iesnervion.keepitfitness.ui.entrenar.EntrenarFragment"
+        android:name="com.iesnervion.keepitfitness.ui.tabEntrenar.entrenar.EntrenarFragment"
         android:label="fragment_entrenar"
         tools:layout="@layout/fragment_entrenar" >
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <activity
         android:id="@+id/userConfigurationActivity"
-        android:name="com.iesnervion.keepitfitness.ui.configuration.UserConfigurationActivity"
+        android:name="com.iesnervion.keepitfitness.ui.userConfiguration.configuration.UserConfigurationActivity"
         android:label="activity_user_configuration"
         tools:layout="@layout/activity_user_configuration" />
     <activity
@@ -29,8 +29,8 @@
         android:label="activity_realizar_entrenamiento"
         tools:layout="@layout/activity_realizar_entrenamiento">
         <argument
-            android:name="id"
-            app:argType="string"
+            android:name="training"
+            app:argType="com.iesnervion.keepitfitness.domain.model.Entrenamiento"
             app:nullable="true" />
     </activity>
 </navigation>

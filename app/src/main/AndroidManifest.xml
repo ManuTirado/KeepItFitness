@@ -21,7 +21,7 @@
             android:name=".ui.RealizarEntrenamientoActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.configuration.UserConfigurationActivity"
+            android:name=".ui.userConfiguration.configuration.UserConfigurationActivity"
             android:exported="false" />
         <activity
             android:name=".ui.home.HomeActivity"

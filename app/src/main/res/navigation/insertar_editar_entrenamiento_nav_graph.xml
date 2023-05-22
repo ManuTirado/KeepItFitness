@@ -7,7 +7,27 @@
 
     <fragment
         android:id="@+id/insertarEditarEntrenamientoFragment"
-        android:name="com.iesnervion.keepitfitness.ui.insertar_editar_entrenamiento.InsertarEditarEntrenamientoFragment"
+        android:name="com.iesnervion.keepitfitness.ui.tabEntrenamientos.insertar_editar_entrenamiento.InsertarEditarEntrenamientoFragment"
         android:label="fragment_insertar_editar_entrenamiento"
-        tools:layout="@layout/fragment_insertar_editar_entrenamiento" />
+        tools:layout="@layout/fragment_insertar_editar_entrenamiento" >
+        <action
+            android:id="@+id/action_insertarEditarEntrenamientoFragment_to_crearEjercicioFragment"
+            app:destination="@id/crearEjercicioFragment" />
+        <argument
+            android:name="training"
+            app:argType="com.iesnervion.keepitfitness.domain.model.Entrenamiento"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/crearEjercicioFragment"
+        android:name="com.iesnervion.keepitfitness.ui.tabEntrenamientos.crearEjercicio.CrearEjercicioFragment"
+        android:label="fragment_crear_ejercicio"
+        tools:layout="@layout/fragment_crear_ejercicio" >
+        <action
+            android:id="@+id/action_crearEjercicioFragment_to_insertarEditarEntrenamientoFragment"
+            app:destination="@id/insertarEditarEntrenamientoFragment"
+            app:popUpTo="@id/insertarEditarEntrenamientoFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

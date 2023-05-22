@@ -24,7 +24,7 @@ class RealizarEntrenamientoActivity : AppCompatActivity() {
         Log.i("Navigation", "Create -> RealizarEntrenamientoActivity")
 
         val bundle:Bundle = Bundle()
-        bundle.putString("id", args.id)
+        bundle.putSerializable("training", args.training)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainFragmentContainer) as NavHostFragment
 

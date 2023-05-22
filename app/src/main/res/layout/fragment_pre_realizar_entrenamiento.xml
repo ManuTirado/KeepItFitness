@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.pre_realizar_entrenamiento.PreRealizarEntrenamientoFragment">
+    tools:context=".ui.tabEntrenar.pre_realizar_entrenamiento.PreRealizarEntrenamientoFragment">
 
     <ImageButton
         android:id="@+id/bBack"

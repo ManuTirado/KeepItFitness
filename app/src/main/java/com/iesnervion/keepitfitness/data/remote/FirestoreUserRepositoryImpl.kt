@@ -149,7 +149,7 @@ class FirestoreUserRepositoryImpl @Inject constructor(
             }
 
             // Añadimos el entrenamiento a la lista de entrenamientos del usuario
-            val newTrainingDocRef = trainingDocRef.document()
+            val newTrainingDocRef = trainingDocRef.document(training.id)
             val newTrainingId = training.id
             transaction.update(
                 userDocRef,

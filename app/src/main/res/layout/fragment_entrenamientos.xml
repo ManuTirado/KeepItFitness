@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.entrenamientos.EntrenamientosFragment">
+    tools:context=".ui.tabEntrenamientos.entrenamientos.EntrenamientosFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerTraining"
@@ -26,7 +26,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
-    
+
+    <TextView
+        android:id="@+id/tvNoTrainings"
+        android:visibility="gone"
+        android:text="No has creado ningún entrenamiento aún"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <ImageButton
         android:id="@+id/btnAdd"
         android:layout_width="75dp"

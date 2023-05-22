@@ -7,26 +7,26 @@
 
     <fragment
         android:id="@+id/preRealizarEntrenamientoFragment"
-        android:name="com.iesnervion.keepitfitness.ui.pre_realizar_entrenamiento.PreRealizarEntrenamientoFragment"
+        android:name="com.iesnervion.keepitfitness.ui.tabEntrenar.pre_realizar_entrenamiento.PreRealizarEntrenamientoFragment"
         android:label="fragment_pre_realizar_entrenamiento"
         tools:layout="@layout/fragment_pre_realizar_entrenamiento" >
         <action
             android:id="@+id/action_preRealizarEntrenamientoFragment_to_realizarEntrenamientoFragment"
             app:destination="@id/realizarEntrenamientoFragment" />
         <argument
-            android:name="id"
-            app:argType="string"
+            android:name="training"
+            app:argType="com.iesnervion.keepitfitness.domain.model.Entrenamiento"
             app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/realizarEntrenamientoFragment"
-        android:name="com.iesnervion.keepitfitness.ui.realizar_entrenamiento.RealizarEntrenamientoFragment"
+        android:name="com.iesnervion.keepitfitness.ui.tabEntrenar.realizar_entrenamiento.RealizarEntrenamientoFragment"
         android:label="fragment_realizar_entrenamiento"
         tools:layout="@layout/fragment_realizar_entrenamiento" >
         <argument
-            android:name="id"
-            app:argType="string"
-            app:nullable="false" />
+            android:name="training"
+            app:argType="com.iesnervion.keepitfitness.domain.model.Entrenamiento"
+            app:nullable="true" />
         <action
             android:id="@+id/action_realizarEntrenamientoFragment_to_detalleEntrenamientoFragment2"
             app:destination="@id/detalleEntrenamientoResumenFragment" />
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/detalleEntrenamientoResumenFragment"
-        android:name="com.iesnervion.keepitfitness.ui.detalleEntrenamiento.DetalleEntrenamientoResumenFragment"
+        android:name="com.iesnervion.keepitfitness.ui.tabEntrenar.detalleEntrenamiento.DetalleEntrenamientoResumenFragment"
         android:label="DetalleEntrenamientoResumenFragment" >
         <argument
             android:name="training"
