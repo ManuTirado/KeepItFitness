@@ -72,4 +72,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/bSaveTraining"
+        app:layout_constraintEnd_toEndOf="@id/bSaveTraining"
+        app:layout_constraintStart_toStartOf="@id/bSaveTraining"
+        app:layout_constraintTop_toTopOf="@id/bSaveTraining" />
 </androidx.constraintlayout.widget.ConstraintLayout>

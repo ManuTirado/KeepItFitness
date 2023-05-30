@@ -7,7 +7,6 @@ import android.graphics.PointF
 import android.os.Bundle
 import android.util.Log
 import android.util.Pair
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -15,6 +14,7 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.annotation.NonNull
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,10 +27,7 @@ import com.iesnervion.keepitfitness.domain.model.EntrenamientoRealizado
 import com.iesnervion.keepitfitness.ui.tabProgreso.progreso.recyclerview.ProgresoAdapter
 import com.iesnervion.keepitfitness.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.DecimalFormat
-import java.text.FieldPosition
-import java.text.Format
-import java.text.ParsePosition
+import java.text.*
 import java.util.*
 
 @AndroidEntryPoint
@@ -155,7 +152,9 @@ class ProgresoFragment : Fragment() {
 
             if (semana.isNotEmpty()) {
                 val fecha = semana.first().fecha
-                binding.tvSelectedDate.text = "${fecha}"
+                val pattern = "dd-MM-yyyy"
+                val simpleDateFormat = SimpleDateFormat(pattern)
+                binding.tvSelectedDate.text = "${simpleDateFormat.format(fecha)}"
             } else {
                 binding.tvSelectedDate.text = "No hay entrenamientos"
             }

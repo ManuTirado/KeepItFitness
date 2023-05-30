@@ -50,22 +50,16 @@ class InsertarEditarEntrenamientoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i("Navigation", "ViewCreated -> InsertarEditarEntrenamientoFragment")
-        // TODO: - No se pasa bn el entrenamiento
-//        val entrenamiento = args.training
-//        if (entrenamiento != null) {
-//            Toast.makeText(requireContext(), entrenamiento.id, Toast.LENGTH_SHORT).show()
-//        } else {
-//            Toast.makeText(requireContext(), "entrenamiento es null", Toast.LENGTH_SHORT).show()
-//        }
-        handleButtonEnable()
+
+        handleButtonEnable(exercises.isNotEmpty())
         initObservers()
         initListeners()
 
         initRecyclerView()
     }
 
-    private fun handleButtonEnable() {
-        binding.bSaveTraining.isEnabled = exercises.isNotEmpty()
+    private fun handleButtonEnable(enable: Boolean) {
+        binding.bSaveTraining.isEnabled = enable
     }
 
     private fun initRecyclerView() {
@@ -99,25 +93,13 @@ class InsertarEditarEntrenamientoFragment : Fragment() {
     private fun initObservers() {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("ejercicio")?.observe(viewLifecycleOwner) { result ->
             exercises.add(parseStringToExercise(result))
-            handleButtonEnable()
+            handleButtonEnable(exercises.isNotEmpty())
         }
 
         viewModel.uploadingTrainingState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is Resource.Success -> {    // Si se sube el entrenamiento correctamente
-                    if (state.data) {
-                        Toast.makeText(
-                            requireContext(),
-                            "Subido correctamente (true)",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        Toast.makeText(
-                            requireContext(),
-                            "Subido correctamente (false)",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+                    handleLoading(isLoading = false)
                     requireActivity().onBackPressedDispatcher.onBackPressed()
                 }
                 is Resource.Error -> {      // Si ocurre un error al subir el entrenamiento
@@ -222,9 +204,13 @@ class InsertarEditarEntrenamientoFragment : Fragment() {
     private fun handleLoading(isLoading: Boolean) {
         with(binding) {
             if (isLoading) {
+                bSaveTraining.isEnabled = false
+                pbLoading.visibility = View.VISIBLE
                 pbLoadingExercises.visibility = View.VISIBLE
             } else {
                 pbLoadingExercises.visibility = View.GONE
+                pbLoading.visibility = View.GONE
+                bSaveTraining.isEnabled = true
             }
         }
     }

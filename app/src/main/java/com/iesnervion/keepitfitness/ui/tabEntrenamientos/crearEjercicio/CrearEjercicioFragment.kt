@@ -172,13 +172,17 @@ class CrearEjercicioFragment : Fragment() {
      * @param isLoading Booleano que indica si está cargando o no.
      */
     private fun handleLoading(isLoading: Boolean) {
-//        with(binding) {
-//            if (isLoading) {
-//                pbLoadingExercises.visibility = View.VISIBLE
-//            } else {
-//                pbLoadingExercises.visibility = View.GONE
-//            }
-//        }
+        with(binding) {
+            if (isLoading) {
+                bSaveChanges.isEnabled = false
+                pbUpdatingUser.visibility = View.VISIBLE
+                pbLoading.visibility = View.VISIBLE
+            } else {
+                pbUpdatingUser.visibility = View.GONE
+                pbLoading.visibility = View.GONE
+                bSaveChanges.isEnabled = true
+            }
+        }
     }
 
     override fun onDestroyView() {

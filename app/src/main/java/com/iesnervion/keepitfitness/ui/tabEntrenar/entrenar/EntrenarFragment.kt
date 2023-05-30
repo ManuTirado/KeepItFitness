@@ -46,7 +46,6 @@ class EntrenarFragment : Fragment() {
         super.onStart()
         trainings.removeAll(trainings)
         viewModel.getAllTrains()
-        viewModel.getAllPersonalizedTrains()
     }
 
     private fun initRecyclerView(trainings:List<Entrenamiento>) {
@@ -81,10 +80,12 @@ class EntrenarFragment : Fragment() {
                 is Resource.Success -> {    // Si se obtiene el listado correctamente
                     trainings.addAll(state.data)
                     recyclerAdapter.updateData(trainings)
+                    viewModel.getAllPersonalizedTrains()
                     //updateRecyclerView(state.data)
                     handleLoading(isLoading = false)
                 }
                 is Resource.Error -> {      // Si ocurre un error al obtener el listado
+                    viewModel.getAllPersonalizedTrains()
                     handleLoading(isLoading = false)
                     Toast.makeText(
                         requireContext(),

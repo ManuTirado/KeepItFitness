@@ -43,7 +43,7 @@ class EntrenarViewModel @Inject constructor(
         viewModelScope.launch {
 
             getPersonalizedTrainings(auth.uid.toString()).onEach { state ->
-                _loadingTrainsState. value = state
+                _loadingPersTrainsState. value = state
             }.launchIn(viewModelScope)
         }
     }
