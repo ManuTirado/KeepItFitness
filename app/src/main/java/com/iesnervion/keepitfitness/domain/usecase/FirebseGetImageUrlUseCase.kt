@@ -28,3 +28,25 @@ class FirebseGetImageUrlUseCase @Inject constructor(
         }
     }
 }
+
+class FirebseGetExerciseImageUrlUseCase @Inject constructor(
+    private val storageRepository: StorageRepository
+) {
+    suspend operator fun invoke(exerciseId: String): Flow<Resource<Uri>> = flow {
+
+        try {
+            emit(Resource.Loading)
+
+            val uri: Uri? = storageRepository.getExercisePhotoURL(exerciseId)
+            if (uri != null) {
+                emit(Resource.Success(uri))
+            } else {
+                emit(Resource.Error("Error obtaining image URL"))
+            }
+            emit(Resource.Finished)
+        } catch (e: Exception) {
+            emit(Resource.Error(e.message.toString()))
+            emit(Resource.Finished)
+        }
+    }
+}

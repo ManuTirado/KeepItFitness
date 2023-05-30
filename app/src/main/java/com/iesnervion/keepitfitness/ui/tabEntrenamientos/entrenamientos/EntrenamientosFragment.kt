@@ -79,12 +79,31 @@ class EntrenamientosFragment : Fragment() {
                         binding.tvNoTrainings.visibility = View.VISIBLE
                     } else {
                         binding.tvNoTrainings.visibility = View.GONE
-                        initRecyclerView(state.data)
                     }
-                    //updateRecyclerView(state.data)
+                    initRecyclerView(state.data)
                     handleLoading(isLoading = false)
                 }
                 is Resource.Error -> {      // Si ocurre un error al obtener el listado
+                    handleLoading(isLoading = false)
+                    Toast.makeText(
+                        requireContext(),
+                        state.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is Resource.Loading -> handleLoading(isLoading = true)  // Si está cargando, se muestra el ProgressBar
+                else -> Unit    // Si no se hace nada
+            }
+        }
+
+        viewModel.deletingState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is Resource.Success -> {    // Si se borra correctamente
+                    viewModel.getAllTrains()
+                    //updateRecyclerView(state.data)
+                    handleLoading(isLoading = false)
+                }
+                is Resource.Error -> {      // Si ocurre un error al borrar
                     handleLoading(isLoading = false)
                     Toast.makeText(
                         requireContext(),
@@ -111,10 +130,8 @@ class EntrenamientosFragment : Fragment() {
     }
 
     fun onItemSelected(entrenamiento: Entrenamiento) {
-        // TODO: - No se pasa bn el entrenamiento
-        val action = EntrenamientosFragmentDirections.actionEntrenamientosFragmentToInsertarEditarEntrenamiento(entrenamiento)
-//        action.training = entrenamiento
-        findNavController().navigate(action)
+        // TODO: - Borrar entrenamiento
+        viewModel.deleteTraining(entrenamiento.id)
     }
 
     /**

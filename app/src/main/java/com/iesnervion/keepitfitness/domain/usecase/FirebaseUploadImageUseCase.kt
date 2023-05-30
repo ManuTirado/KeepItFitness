@@ -24,3 +24,22 @@ class FirebaseUploadImageUseCase @Inject constructor(
         }
     }
 }
+
+class FirebaseUploadExerciseImageUseCase @Inject constructor(
+    private val storageRepository: StorageRepository
+) {
+    suspend operator fun invoke(uri: Uri, exerciseId: String): Flow<Resource<Boolean>> = flow {
+
+        try {
+            emit(Resource.Loading)
+
+//            val isSucces: Boolean = storageRepository.uploadImage(uri)
+            val isSucces: Boolean = storageRepository.uploadExerciseImage(uri, exerciseId)
+            emit(Resource.Success(isSucces))
+            emit(Resource.Finished)
+        } catch (e: Exception) {
+            emit(Resource.Error(e.message.toString()))
+            emit(Resource.Finished)
+        }
+    }
+}

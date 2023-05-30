@@ -15,7 +15,13 @@
     <string name="home__user_configuration_header">CONFIGURACIÓN</string>
     <string name="home__username_hint">Nombre de usuario</string>
     <string name="home__save_changes_button">Guardar</string>
-    <string name="login__foto_url_hint">Foto</string>
+    <string name="user_configuration__weight_hint">Peso (kg)</string>
+    <string name="user_configuration__height_hint">Altura (m)</string>
+    <string name="user_configuration__imc_hint">IMC</string>
+    <string name="user_configuration__imc_disclaimer_underweight">Peso insuficiente</string>
+    <string name="user_configuration__imc_disclaimer_normal">Peso normal</string>
+    <string name="user_configuration__imc_disclaimer_overweight">Sobrepeso</string>
+    <string name="user_configuration__imc_disclaimer_obesity">Obesidad</string>
     <string name="realizar_entrenamiento__start_training_button">Empezar</string>
     <string name="home__next_exercise_button">Siguiente</string>
 </resources>

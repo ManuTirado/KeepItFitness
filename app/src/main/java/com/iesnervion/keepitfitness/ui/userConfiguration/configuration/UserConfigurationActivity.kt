@@ -1,9 +1,11 @@
 package com.iesnervion.keepitfitness.ui.userConfiguration.configuration
 
 import android.content.DialogInterface
+import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.CalendarContract.Colors
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -147,21 +149,49 @@ class UserConfigurationActivity : AppCompatActivity() {
             Glide.with(ivUserPhoto.context).load(user.photo).placeholder(R.drawable.ic_uknown_user)
                 .into(binding.ivUserPhoto)
             etUsername.setText(user.username)
-            etPhotoUrl.setText(user.photo)
+            if (user.weight != 0f) {
+                etWeight.setText(user.weight.toString())
+            }
+            if (user.height != 0f) {
+                etHeight.setText(user.height.toString())
+            }
+            val imc = user.weight / (user.height * user.height)
+            if (imc != 0f && !imc.isNaN()) {
+                etIMC.setText(imc.toString())
+                if (imc < 18.5) {
+                    binding.tvImcDisclaimer.text = getText(R.string.user_configuration__imc_disclaimer_underweight)
+                    binding.tilIMC.boxBackgroundColor = getColor(R.color.disclaimer_red)
+                    binding.tvImcDisclaimer.setTextColor(getColor(R.color.disclaimer_red))
+                } else if (imc in 18.5..24.9) {
+                    binding.tvImcDisclaimer.text = getText(R.string.user_configuration__imc_disclaimer_normal)
+                    binding.tilIMC.boxBackgroundColor = getColor(R.color.disclaimer_green)
+                    binding.tvImcDisclaimer.setTextColor(getColor(R.color.disclaimer_green))
+                } else if (imc in 24.9..30.0) {
+                    binding.tvImcDisclaimer.text = getText(R.string.user_configuration__imc_disclaimer_overweight)
+                    binding.tilIMC.boxBackgroundColor = getColor(R.color.disclaimer_orange)
+                    binding.tvImcDisclaimer.setTextColor(getColor(R.color.disclaimer_orange))
+                } else if (imc > 30) {
+                    binding.tvImcDisclaimer.text = getText(R.string.user_configuration__imc_disclaimer_obesity)
+                    binding.tilIMC.boxBackgroundColor = getColor(R.color.disclaimer_red)
+                    binding.tvImcDisclaimer.setTextColor(getColor(R.color.disclaimer_red))
+                }
+            }
         }
 
         if (user.uid.isEmpty()) {
             Log.i("Prueba", "isEmpty")
             with(binding) {
                 etUsername.isEnabled = false
-                etPhotoUrl.isEnabled = false
+                etWeight.isEnabled = false
+                etHeight.isEnabled = false
                 bSaveChanges.isEnabled = false
             }
             showErrorAlert()
         } else {
             with(binding) {
                 etUsername.isEnabled = true
-                etPhotoUrl.isEnabled = true
+                etWeight.isEnabled = true
+                etHeight.isEnabled = true
                 bSaveChanges.isEnabled = true
             }
         }
@@ -176,8 +206,9 @@ class UserConfigurationActivity : AppCompatActivity() {
                 onBackPressedDispatcher.onBackPressed()
             }
             bSaveChanges.setOnClickListener {
-                //user.photo = etPhotoUrl.text.toString()
                 user.username = etUsername.text.toString()
+                user.weight = etWeight.text.toString().toFloat()
+                user.height = etHeight.text.toString().toFloat()
                 if (newImageUri != null) {
                     viewModel.uploadImage(newImageUri!!)
                 } else {

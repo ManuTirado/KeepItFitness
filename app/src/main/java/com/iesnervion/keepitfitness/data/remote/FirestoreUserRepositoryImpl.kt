@@ -1,22 +1,12 @@
 package com.iesnervion.keepitfitness.data.remote
 
-import android.util.Log
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.iesnervion.keepitfitness.data.util.FirebaseConstants.EXERCISES_COLLECTION
-import com.iesnervion.keepitfitness.data.util.FirebaseConstants.TIME
-import com.iesnervion.keepitfitness.data.util.FirebaseConstants.TRAININGS_COLLECTION
 import com.iesnervion.keepitfitness.data.util.FirebaseConstants.USERS_COLLECTION
 import com.iesnervion.keepitfitness.domain.model.*
 import com.iesnervion.keepitfitness.domain.repository.UserRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class FirestoreUserRepositoryImpl @Inject constructor(
@@ -34,9 +24,11 @@ class FirestoreUserRepositoryImpl @Inject constructor(
             FirebaseFirestore.getInstance().collection(USERS_COLLECTION)
                 .document(user.uid)
                 .set(user, SetOptions.merge())
-                .addOnCompleteListener { isSuccesfull = it.isSuccessful }
-                .await()
-            delay(TIME)
+                .addOnCompleteListener {
+
+                }.continueWith {
+                    isSuccesfull = it.isSuccessful
+                }.await()
             isSuccesfull
         } catch (e: Exception) {
             false
@@ -56,10 +48,10 @@ class FirestoreUserRepositoryImpl @Inject constructor(
                 .document(uid)
                 .get()
                 .addOnSuccessListener {
-                    loggedUser = it.toObject(User::class.java)!!
-                }
-                .await()
-            delay(TIME)
+
+                }.continueWith {
+                    loggedUser = it.result.toObject(User::class.java)!!
+                }.await()
             loggedUser
         } catch (e: Exception) {
             User()
@@ -97,16 +89,11 @@ class FirestoreUserRepositoryImpl @Inject constructor(
             // Devolvemos null, ya que no necesitamos retornar nada de la transacción
             null
         }
-            .addOnSuccessListener {
-                // El entrenamiento se ha insertado correctamente
-                isSuccesful = true
-            }
-            .addOnFailureListener { exception ->
-                // Ha ocurrido un error al insertar el entrenamiento
-                isSuccesful = false
-            }
-            .await()
-        delay(TIME)
+            .addOnCompleteListener {
+
+            }.continueWith {
+                isSuccesful = it.isSuccessful
+            }.await()
         return  isSuccesful
     }
 
@@ -119,6 +106,8 @@ class FirestoreUserRepositoryImpl @Inject constructor(
 
         trainingsCollectionRef.get()
             .addOnCompleteListener {
+
+            }.continueWith {
                 if (it.isSuccessful) {
                     val trainingsList = mutableListOf<EntrenamientoRealizado>()
                     for (document in it.result) {
@@ -128,7 +117,6 @@ class FirestoreUserRepositoryImpl @Inject constructor(
                     trainings = trainingsList.toList()
                 }
             }.await()
-        delay(TIME)
         return  trainings
     }
 
@@ -163,16 +151,11 @@ class FirestoreUserRepositoryImpl @Inject constructor(
             // Devolvemos null, ya que no necesitamos retornar nada de la transacción
             null
         }
-            .addOnSuccessListener {
-                // El entrenamiento se ha insertado correctamente
-                isSuccesful = true
-            }
-            .addOnFailureListener { exception ->
-                // Ha ocurrido un error al insertar el entrenamiento
-                isSuccesful = false
-            }
-            .await()
-        delay(TIME)
+            .addOnCompleteListener {
+
+            }.continueWith {
+                isSuccesful = it.isSuccessful
+            }.await()
         return  isSuccesful
     }
 
@@ -185,6 +168,8 @@ class FirestoreUserRepositoryImpl @Inject constructor(
 
         trainingsCollectionRef.get()
             .addOnCompleteListener {
+
+            }.continueWith {
                 if (it.isSuccessful) {
                     val trainingsList = mutableListOf<Entrenamiento>()
                     for (document in it.result) {
@@ -194,7 +179,41 @@ class FirestoreUserRepositoryImpl @Inject constructor(
                     trainings = trainingsList.toList()
                 }
             }.await()
-        delay(TIME)
         return trainings
+    }
+
+    override suspend fun deletePersonalizedTrainingFromUserDocument(trainingId: String, userId: String): Boolean {
+        var isSuccessful = false
+        val db = FirebaseFirestore.getInstance()
+        val userDocRef = db.collection(USERS_COLLECTION).document(userId)
+        val trainingDocRef =
+            userDocRef.collection("entrenamientosPersonalizados").document(trainingId)
+
+        db.runTransaction { transaction ->
+            // Obtenemos el documento del usuario y verificamos que exista
+            val userDoc = transaction.get(userDocRef)
+            if (!userDoc.exists()) {
+                throw Exception("El usuario no existe")
+            }
+
+            // Eliminamos el entrenamiento de la lista de entrenamientos del usuario
+            transaction.update(
+                userDocRef,
+                "entrenamientosPersonalizados",
+                FieldValue.arrayRemove(trainingId)
+            )
+
+            // Eliminamos el entrenamiento de su colección correspondiente
+            transaction.delete(trainingDocRef)
+
+            // Devolvemos null, ya que no necesitamos retornar nada de la transacción
+            null
+        }
+            .addOnCompleteListener {
+
+            }.continueWith {
+                isSuccessful = it.isSuccessful
+            }.await()
+        return isSuccessful
     }
 }

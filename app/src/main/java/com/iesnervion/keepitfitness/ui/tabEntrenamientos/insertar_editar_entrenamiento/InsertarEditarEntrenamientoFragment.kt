@@ -34,6 +34,7 @@ class InsertarEditarEntrenamientoFragment : Fragment() {
     private lateinit var recyclerAdapter: InsertarEditarAdapter
     private var exercises: MutableList<EjercicioEntrenamiento> = mutableListOf()
 
+
     private val args: InsertarEditarEntrenamientoFragmentArgs by navArgs()
 
     private val viewModel: InsertarEditarEntrenamientoViewModel by viewModels()
@@ -50,17 +51,21 @@ class InsertarEditarEntrenamientoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.i("Navigation", "ViewCreated -> InsertarEditarEntrenamientoFragment")
         // TODO: - No se pasa bn el entrenamiento
-        val entrenamiento = args.training
-        if (entrenamiento != null) {
-            Toast.makeText(requireContext(), entrenamiento.id, Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(requireContext(), "entrenamiento es null", Toast.LENGTH_SHORT).show()
-        }
-
+//        val entrenamiento = args.training
+//        if (entrenamiento != null) {
+//            Toast.makeText(requireContext(), entrenamiento.id, Toast.LENGTH_SHORT).show()
+//        } else {
+//            Toast.makeText(requireContext(), "entrenamiento es null", Toast.LENGTH_SHORT).show()
+//        }
+        handleButtonEnable()
         initObservers()
         initListeners()
 
         initRecyclerView()
+    }
+
+    private fun handleButtonEnable() {
+        binding.bSaveTraining.isEnabled = exercises.isNotEmpty()
     }
 
     private fun initRecyclerView() {
@@ -94,6 +99,7 @@ class InsertarEditarEntrenamientoFragment : Fragment() {
     private fun initObservers() {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("ejercicio")?.observe(viewLifecycleOwner) { result ->
             exercises.add(parseStringToExercise(result))
+            handleButtonEnable()
         }
 
         viewModel.uploadingTrainingState.observe(viewLifecycleOwner) { state ->
@@ -186,7 +192,11 @@ class InsertarEditarEntrenamientoFragment : Fragment() {
 
             val name = etName.text.toString()
             val desc = etDesc.text.toString()
-            val time = etTime.text.toString() + ":00"
+            val time = if (etTime.text.isNullOrEmpty()) {
+                "00:00"
+            } else {
+                "${etTime.text}:00"
+            }
             if (!name.isNullOrEmpty()) {
                 val entrenamiento = Entrenamiento(name, desc, time, exercises)
                 viewModel.insertTraining(entrenamiento)

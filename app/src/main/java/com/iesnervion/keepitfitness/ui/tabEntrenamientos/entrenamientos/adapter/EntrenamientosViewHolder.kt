@@ -14,7 +14,7 @@ class EntrenamientosViewHolder(view: View) :
         binding.tvTrainingName.text = entrenamientoModel.id
         binding.tvTrainingDesc.text = entrenamientoModel.desc
 
-        binding.ivEdit.setOnClickListener {
+        binding.ivDelete.setOnClickListener {
             onClickListener(entrenamientoModel)
         }
     }

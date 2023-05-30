@@ -20,7 +20,7 @@
             android:textSize="21sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/tvTrainingDesc"
-            app:layout_constraintEnd_toStartOf="@+id/ivEdit"
+            app:layout_constraintEnd_toStartOf="@+id/ivDelete"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Entrenamiento Avanzado" />
@@ -32,16 +32,16 @@
             android:lines="2"
             android:maxLines="2"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ivEdit"
+            app:layout_constraintEnd_toStartOf="@id/ivDelete"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTrainingName"
             tools:text="Ideal para comenzar el cambio que tanto deseas" />
 
         <ImageView
-            android:id="@+id/ivEdit"
+            android:id="@+id/ivDelete"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_pencil"
+            android:src="@drawable/ic_trash"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

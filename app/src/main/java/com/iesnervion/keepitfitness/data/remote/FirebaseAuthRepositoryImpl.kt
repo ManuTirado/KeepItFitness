@@ -1,10 +1,7 @@
 package com.iesnervion.keepitfitness.data.remote
 
 import com.google.firebase.auth.FirebaseAuth
-import com.iesnervion.keepitfitness.data.util.FirebaseConstants
 import com.iesnervion.keepitfitness.domain.repository.AuthRepository
-import com.iesnervion.keepitfitness.util.Resource
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -22,11 +19,13 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
         return try {
             var userUID = ""
             firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener {
-                    userUID = it.user?.uid ?: ""
-                }
-                .await()
-            delay(FirebaseConstants.TIME)
+                .addOnCompleteListener {
+
+                }.continueWith {
+                    if (it.isSuccessful) {
+                        userUID = it.result.user?.uid ?: ""
+                    }
+                }.await()
             userUID
         } catch (e: Exception) {
             ""
@@ -43,11 +42,13 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
         return try {
             var userUID = ""
             firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnSuccessListener {
-                    userUID = it.user?.uid ?: ""
-                }
-                .await()
-            delay(FirebaseConstants.TIME)
+                .addOnCompleteListener {
+
+                }.continueWith {
+                    if (it.isSuccessful) {
+                        userUID = it.result.user?.uid ?: ""
+                    }
+                }.await()
             userUID
         } catch (e: Exception) {
             ""

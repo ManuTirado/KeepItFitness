@@ -2,16 +2,12 @@ package com.iesnervion.keepitfitness.data.remote
 
 import android.net.Uri
 import android.util.Log
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
-import com.iesnervion.keepitfitness.data.util.FirebaseConstants
+import com.iesnervion.keepitfitness.data.util.FirebaseConstants.EXERCISE_IMAGES_FOLDER_NAME
 import com.iesnervion.keepitfitness.data.util.FirebaseConstants.IMAGES_FOLDER_NAME
-import com.iesnervion.keepitfitness.domain.repository.AuthRepository
 import com.iesnervion.keepitfitness.domain.repository.StorageRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.tasks.await
-import java.net.URI
 import javax.inject.Inject
 
 class FirebaseStorageRepositoryImpl @Inject constructor(
@@ -28,9 +24,26 @@ class FirebaseStorageRepositoryImpl @Inject constructor(
 
         storageReference.putFile(uri)
             .addOnCompleteListener {
+
+            }.continueWith {
                 isSuccesfull = it.isSuccessful
             }.await()
-        delay(FirebaseConstants.TIME)
+        return isSuccesfull
+    }
+
+    override suspend fun uploadExerciseImage(uri: Uri, exerciseId: String): Boolean {
+        var isSuccesfull = false
+
+        val uid = firebaseAuth.currentUser?.uid
+
+        val storageReference = firebaseStorage.getReference("$EXERCISE_IMAGES_FOLDER_NAME/$uid/$exerciseId")
+
+        storageReference.putFile(uri)
+            .addOnCompleteListener {
+
+            }.continueWith {
+                isSuccesfull = it.isSuccessful
+            }.await()
         return isSuccesfull
     }
 
@@ -38,11 +51,28 @@ class FirebaseStorageRepositoryImpl @Inject constructor(
         val storageRef = firebaseStorage.reference.child(IMAGES_FOLDER_NAME).child(firebaseAuth.currentUser?.uid ?: "")
         var uri: Uri? = null
 
-        storageRef.downloadUrl.addOnSuccessListener {
-            uri = it
+        storageRef.downloadUrl.addOnCompleteListener {
+
+        }.continueWith {
+            if (it.isSuccessful) {
+                uri = it.result
+            }
         }.await()
-        delay(FirebaseConstants.TIME)
         return uri
     }
 
+    override suspend fun getExercisePhotoURL(exerciseId: String): Uri? {
+        val storageRef = firebaseStorage.reference.child(EXERCISE_IMAGES_FOLDER_NAME).child(firebaseAuth.currentUser?.uid ?: "").child(exerciseId)
+        Log.i("IMAGE", storageRef.path)
+        var uri: Uri? = null
+
+        storageRef.downloadUrl.addOnCompleteListener {
+
+        }.continueWith {
+            if (it.isSuccessful) {
+                uri = it.result
+            }
+        }.await()
+        return uri
+    }
 }

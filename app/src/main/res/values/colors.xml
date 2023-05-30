@@ -8,4 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="home__header">#DCDCDC</color>
+    <color name="disclaimer_red">#99FF0000</color>
+    <color name="disclaimer_orange">#99FF5900</color>
+    <color name="disclaimer_green">#9959FF00</color>
 </resources>
