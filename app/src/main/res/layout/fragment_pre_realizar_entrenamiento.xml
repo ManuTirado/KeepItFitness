@@ -6,23 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.tabEntrenar.pre_realizar_entrenamiento.PreRealizarEntrenamientoFragment">
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.IconButton"
         android:id="@+id/bBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="8dp"
-        android:src="@drawable/ic_back_arrow"
+        android:padding="0dp"
+        app:icon="@drawable/ic_back_arrow"
+        app:iconSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
+        style="@style/TextAppearance.Material3.ActionBar.Title"
+        android:textStyle="bold"
         android:id="@+id/tvHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Avanzado"
-        android:textAppearance="?attr/textAppearanceHeadline6"
         android:translationZ="10dp"
         app:layout_constraintBottom_toBottomOf="@id/bBack"
         app:layout_constraintEnd_toEndOf="parent"

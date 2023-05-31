@@ -9,17 +9,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/headerLayout"
+        style="@style/Widget.Material3.TabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="10dp"
         android:paddingStart="20dp"
         android:paddingEnd="10dp"
-
-        android:background="@color/home__header"
-
         app:layout_constraintBottom_toTopOf="@id/fHome"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -48,26 +45,25 @@
 
         <TextView
             android:id="@+id/tvUserName"
-            style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:layout_width="wrap_content"
+            style="@style/TextAppearance.Material3.TitleLarge"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/tvUserEmail"
-
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintStart_toEndOf="@+id/ivUserPhoto"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="nombreUsuario" />
+            tools:text="Prueba1" />
 
         <TextView
             android:id="@+id/tvUserEmail"
-            style="@style/TextAppearance.MaterialComponents.Body2"
-            android:layout_width="wrap_content"
+            style="@style/TextAppearance.Material3.BodyMedium"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
-
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintStart_toEndOf="@+id/ivUserPhoto"
             app:layout_constraintTop_toBottomOf="@id/tvUserName"
             tools:text="prueba@gmail.com" />

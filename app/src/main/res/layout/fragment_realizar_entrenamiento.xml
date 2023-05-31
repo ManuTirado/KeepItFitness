@@ -6,23 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.tabEntrenar.realizar_entrenamiento.RealizarEntrenamientoFragment">
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/bBack"
+        style="@style/Widget.Material3.Button.IconButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="8dp"
-        android:src="@drawable/ic_back_arrow"
+        android:padding="0dp"
+        app:icon="@drawable/ic_back_arrow"
+        app:iconSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <Chronometer
         android:id="@+id/chronometer"
+        style="@style/TextAppearance.Material3.ActionBar.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/bBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +43,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chronometer"
         app:layout_constraintVertical_bias="0.26999998"
-        app:strokeColor="@color/black"
         app:strokeWidth="5dp"
         tools:src="@drawable/ic_dumbbell" />
 
@@ -71,21 +73,21 @@
 
             <TextView
                 android:id="@+id/tvWeightLabel"
+                style="@style/TextAppearance.Material3.TitleLarge"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Peso(Kg)"
                 android:textAlignment="center"
-                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvRepsLabel"
+                style="@style/TextAppearance.Material3.TitleLarge"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_column="2"
                 android:text="Reps"
                 android:textAlignment="center"
-                android:textSize="22sp"
                 android:textStyle="bold" />
         </TableRow>
 
@@ -93,13 +95,14 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilWeight"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
 
                 tools:hint="15">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
                     android:id="@+id/etWeight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -120,12 +123,13 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilReps"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 tools:hint="8">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
                     android:id="@+id/etReps"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -19,7 +19,6 @@
             android:scaleType="centerCrop"
             tools:src="@drawable/ic_dumbbell"
             app:strokeWidth="1dp"
-            app:strokeColor="@color/black"
             android:padding="1dp"
             app:contentPadding="10dp"
 
@@ -29,11 +28,10 @@
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 
         <TextView
+            style="@style/TextAppearance.Material3.TitleLarge"
             android:id="@+id/tvExerciseName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="21sp"
             android:textStyle="bold"
             android:textAlignment="center"
 
@@ -44,11 +42,10 @@
             tools:text="Curl de Biceps" />
 
         <TextView
+            style="@style/TextAppearance.Material3.TitleLarge"
             android:id="@+id/tvExerciseWeight"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="21sp"
             android:textStyle="bold"
             android:textAlignment="textEnd"
 
@@ -62,8 +59,7 @@
             android:id="@+id/tvX"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="21sp"
+            style="@style/TextAppearance.Material3.TitleLarge"
             android:textStyle="bold"
             android:textAlignment="center"
             android:layout_marginHorizontal="10dp"
@@ -79,8 +75,7 @@
             android:id="@+id/tvExerciseReps"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="21sp"
+            style="@style/TextAppearance.Material3.TitleLarge"
             android:textStyle="bold"
             android:textAlignment="textStart"
 

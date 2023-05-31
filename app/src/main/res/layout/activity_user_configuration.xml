@@ -6,23 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.userConfiguration.configuration.UserConfigurationActivity">
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/bBack"
+        style="@style/Widget.Material3.Button.IconButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="8dp"
-        android:src="@drawable/ic_back_arrow"
+        android:padding="0dp"
+        app:icon="@drawable/ic_back_arrow"
+        app:iconSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvHeader"
+        style="@style/TextAppearance.Material3.ActionBar.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/home__user_configuration_header"
-        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textStyle="bold"
         android:translationZ="10dp"
         app:layout_constraintBottom_toBottomOf="@id/bBack"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,16 +47,14 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivUserPhoto"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
                 android:padding="2dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
-
-                app:strokeColor="@color/black"
                 app:strokeWidth="3dp"
                 tools:src="@drawable/ic_uknown_user" />
 
@@ -70,7 +71,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilUsername"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -82,6 +83,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etUsername"
+                    style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text" />
@@ -89,7 +91,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilWeight"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -101,6 +103,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etWeight"
+                    style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal" />
@@ -108,7 +111,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilHeight"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -120,6 +123,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etHeight"
+                    style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal" />
@@ -127,7 +131,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilIMC"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -139,22 +143,51 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etIMC"
-                    android:editable="false"
+                    style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:editable="false"
                     tools:text="21.43" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/tvImcDisclaimer"
-                style="@style/TextAppearance.AppCompat.Caption"
-                android:layout_width="match_parent"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tilIMC"
                 tools:text="Prueba" />
+
+            <LinearLayout
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="32dp"
+                android:id="@+id/containerSwitchDarkMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tilIMC">
+
+                <TextView
+                    android:layout_weight="1"
+                    style="@style/TextAppearance.Material3.TitleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Modo oscuro"
+                    android:textStyle="" />
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchDarkMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:thumbIcon="@drawable/ic_darkmode" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/bSaveChanges"
@@ -168,7 +201,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tilIMC" />
+                app:layout_constraintTop_toBottomOf="@id/containerSwitchDarkMode" />
 
             <ProgressBar
                 android:id="@+id/pbUpdatingUser"

@@ -6,23 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.tabEntrenamientos.insertar_editar_entrenamiento.InsertarEditarEntrenamientoFragment">
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.IconButton"
         android:id="@+id/bBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="8dp"
-        android:src="@drawable/ic_back_arrow"
+        android:padding="0dp"
+        app:icon="@drawable/ic_back_arrow"
+        app:iconSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
+        style="@style/TextAppearance.Material3.ActionBar.Title"
+        android:textStyle="bold"
         android:id="@+id/tvHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Añadir / Editar ejercicios"
-        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:text="Añadir ejercicios"
         android:translationZ="10dp"
         app:layout_constraintBottom_toBottomOf="@id/bBack"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,15 +53,15 @@
         app:layout_constraintStart_toStartOf="@+id/recyclerExercises"
         app:layout_constraintTop_toTopOf="@+id/recyclerExercises" />
 
-    <ImageButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/bAddExercise"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        app:icon="@drawable/ic_plus"
+        android:text="ejercicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:src="@drawable/ic_plus"
         app:layout_constraintBottom_toTopOf="@id/bSaveTraining"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/bSaveTraining"

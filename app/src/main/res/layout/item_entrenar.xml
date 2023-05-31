@@ -13,11 +13,10 @@
         android:layout_margin="10dp">
 
         <TextView
+            style="@style/TextAppearance.Material3.TitleLarge"
             android:id="@+id/tvTrainingName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="21sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/tvTrainingDesc"
             app:layout_constraintEnd_toEndOf="parent"
@@ -26,27 +25,28 @@
             tools:text="Entrenamiento Avanzado" />
 
         <TextView
+            style="@style/TextAppearance.Material3.BodyLarge"
             android:layout_marginEnd="2dp"
             android:id="@+id/tvTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="30:00"
-            android:textAppearance="?attr/textAppearanceBody1"
             android:translationZ="10dp"
             app:layout_constraintEnd_toStartOf="@+id/tvMin"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            style="@style/TextAppearance.Material3.BodyLarge"
             android:id="@+id/tvMin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="min"
-            android:textAppearance="?attr/textAppearanceBody1"
             android:translationZ="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            style="@style/TextAppearance.Material3.BodyMedium"
             android:id="@+id/tvTrainingDesc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

@@ -1,6 +1,7 @@
 package com.iesnervion.keepitfitness.ui.userConfiguration.configuration
 
 import android.content.DialogInterface
+import android.content.res.Configuration
 import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import com.bumptech.glide.Glide
 import com.iesnervion.keepitfitness.R
 import com.iesnervion.keepitfitness.databinding.ActivityUserConfigurationBinding
@@ -35,6 +37,14 @@ class UserConfigurationActivity : AppCompatActivity() {
         setContentView(binding.root)
         Log.i("Navigation", "Create -> UserConfigurationActivity")
 
+        when(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.switchDarkMode.isChecked = true
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.switchDarkMode.isChecked = false
+            }
+        }
         initObservers()
         initListeners()
 
@@ -160,19 +170,19 @@ class UserConfigurationActivity : AppCompatActivity() {
                 etIMC.setText(imc.toString())
                 if (imc < 18.5) {
                     binding.tvImcDisclaimer.text = getText(R.string.user_configuration__imc_disclaimer_underweight)
-                    binding.tilIMC.boxBackgroundColor = getColor(R.color.disclaimer_red)
+                    binding.tilIMC.setBoxBackgroundColorResource(R.color.disclaimer_red)
                     binding.tvImcDisclaimer.setTextColor(getColor(R.color.disclaimer_red))
                 } else if (imc in 18.5..24.9) {
                     binding.tvImcDisclaimer.text = getText(R.string.user_configuration__imc_disclaimer_normal)
-                    binding.tilIMC.boxBackgroundColor = getColor(R.color.disclaimer_green)
+                    binding.tilIMC.setBoxBackgroundColorResource(R.color.disclaimer_green)
                     binding.tvImcDisclaimer.setTextColor(getColor(R.color.disclaimer_green))
                 } else if (imc in 24.9..30.0) {
                     binding.tvImcDisclaimer.text = getText(R.string.user_configuration__imc_disclaimer_overweight)
-                    binding.tilIMC.boxBackgroundColor = getColor(R.color.disclaimer_orange)
+                    binding.tilIMC.setBoxBackgroundColorResource(R.color.disclaimer_orange)
                     binding.tvImcDisclaimer.setTextColor(getColor(R.color.disclaimer_orange))
                 } else if (imc > 30) {
                     binding.tvImcDisclaimer.text = getText(R.string.user_configuration__imc_disclaimer_obesity)
-                    binding.tilIMC.boxBackgroundColor = getColor(R.color.disclaimer_red)
+                    binding.tilIMC.setBoxBackgroundColorResource(R.color.disclaimer_red)
                     binding.tvImcDisclaimer.setTextColor(getColor(R.color.disclaimer_red))
                 }
             }
@@ -217,6 +227,13 @@ class UserConfigurationActivity : AppCompatActivity() {
             }
             ivUserPhoto.setOnClickListener {
                 photoPickerLauncher.launch("image/*")
+            }
+            switchDarkMode.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }
             }
         }
     }

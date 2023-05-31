@@ -15,9 +15,11 @@
                 android:id="@+id/plot"
                 style="@style/APDefacto.Light"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                app:backgroundColor="#FFFFFF"
-                app:graphBackgroundColor="#FFFFFF"
+                android:layout_height="350dp"
+                android:backgroundTint="#80FFFFFF"
+                app:gridBackgroundColor="#4DFFFFFF"
+                app:backgroundColor="#00FFFFFF"
+                app:graphBackgroundColor="#00FFFFFF"
                 app:legendVisible="false"
                 app:lineLabelInsetLeft="0dp"
                 app:lineLabelRotationBottom="0"
@@ -28,6 +30,7 @@
                 app:title="Minutos entrenados" />
 
             <TextView
+                style="@style/TextAppearance.Material3.BodyMedium"
                 android:text="No hay entrenamientos"
                 android:textAlignment="center"
                 android:id="@+id/tvSelectedDate"
