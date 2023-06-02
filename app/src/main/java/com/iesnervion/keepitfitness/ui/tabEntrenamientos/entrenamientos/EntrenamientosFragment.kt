@@ -1,6 +1,6 @@
 package com.iesnervion.keepitfitness.ui.tabEntrenamientos.entrenamientos
 
-import android.R
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.iesnervion.keepitfitness.R
 import com.iesnervion.keepitfitness.databinding.FragmentEntrenamientosBinding
 import com.iesnervion.keepitfitness.domain.model.Entrenamiento
 import com.iesnervion.keepitfitness.ui.tabEntrenamientos.entrenamientos.adapter.EntrenamientosAdapter
@@ -130,8 +132,14 @@ class EntrenamientosFragment : Fragment() {
     }
 
     fun onItemSelected(entrenamiento: Entrenamiento) {
-        // TODO: - Borrar entrenamiento
-        viewModel.deleteTraining(entrenamiento.id)
+        val alertBuilder = MaterialAlertDialogBuilder(requireContext(), com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered)
+        alertBuilder.setTitle("Borrar")
+        alertBuilder.setMessage("¿Está seguro de borrar este entrenamiento?")
+        alertBuilder.setPositiveButton("Borrar") { dialog, which ->
+            viewModel.deleteTraining(entrenamiento.id)
+        }
+        alertBuilder.setNegativeButton("Cancelar", null)
+        alertBuilder.show()
     }
 
     /**

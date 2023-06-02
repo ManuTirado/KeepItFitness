@@ -7,16 +7,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.getDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import com.iesnervion.keepitfitness.R
 import com.iesnervion.keepitfitness.databinding.FragmentInsertarEditarEntrenamientoBinding
 import com.iesnervion.keepitfitness.domain.model.Ejercicio
 import com.iesnervion.keepitfitness.domain.model.EjercicioEntrenamiento
@@ -138,35 +140,39 @@ class InsertarEditarEntrenamientoFragment : Fragment() {
     }
 
     private fun showSaveAlert(context: Context) {
-
-        val builder = AlertDialog.Builder(context)
+        val builder = MaterialAlertDialogBuilder(context, com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered)
         builder.setTitle("Guardar entrenamiento")
         builder.setCancelable(false)
 
         val container = LinearLayout(context)
         container.orientation = LinearLayout.VERTICAL
         container.setPadding(20, 20, 20, 10)
+        container.dividerDrawable = getDrawable(context, R.drawable.space)
+        container.showDividers = LinearLayout.SHOW_DIVIDER_MIDDLE
 
-        val tvName = TextView(context)
-        tvName.text = "Nombre"
-        container.addView(tvName)
-        val etName = EditText(context)
+        val tilName = TextInputLayout(context)
+        tilName.boxBackgroundMode = TextInputLayout.BOX_BACKGROUND_OUTLINE
+        val etName = TextInputEditText(tilName.context)
+        etName.hint = "Nombre"
         etName.inputType = InputType.TYPE_CLASS_TEXT
-        container.addView(etName)
+        tilName.addView(etName)
+        container.addView(tilName)
 
-        val tvDesc = TextView(context)
-        tvDesc.text = "Descripción"
-        container.addView(tvDesc)
-        val etDesc = EditText(context)
+        val tilDesc = TextInputLayout(context)
+        tilDesc.boxBackgroundMode = TextInputLayout.BOX_BACKGROUND_OUTLINE
+        val etDesc = TextInputEditText(tilDesc.context)
+        etDesc.hint = "Descripción"
         etDesc.inputType = InputType.TYPE_CLASS_TEXT
-        container.addView(etDesc)
+        tilDesc.addView(etDesc)
+        container.addView(tilDesc)
 
-        val tvTime = TextView(context)
-        tvTime.text = "Tiempo estimado (min)"
-        container.addView(tvTime)
-        val etTime = EditText(context)
+        val tilTime = TextInputLayout(context)
+        tilName.boxBackgroundMode = TextInputLayout.BOX_BACKGROUND_OUTLINE
+        val etTime = TextInputEditText(tilTime.context)
+        etTime.hint = "Tiempo estimado (min)"
         etTime.inputType = InputType.TYPE_CLASS_NUMBER
-        container.addView(etTime)
+        tilTime.addView(etTime)
+        container.addView(tilTime)
 
         builder.setView(container)
         // Set up the buttons
@@ -220,16 +226,3 @@ class InsertarEditarEntrenamientoFragment : Fragment() {
         _binding = null
     }
 }
-
-//    private fun prueba(): MutableList<EjercicioEntrenamiento> {
-//        var ejercicios: MutableList<EjercicioEntrenamiento> = mutableListOf()
-//        for (i in 1..10) {
-//            val ejercicio = EjercicioEntrenamiento(exercise =  Ejercicio(id = "$i", photo = "photo", name = "ejercicio $i", type = "tipo"), reps = ranNumber(), weight = ranNumber())
-//            ejercicios.add(ejercicio)
-//        }
-//        return ejercicios
-//    }
-
-//    private fun ranNumber(): Long {
-//        return (Random.nextLong()*100)
-//    }

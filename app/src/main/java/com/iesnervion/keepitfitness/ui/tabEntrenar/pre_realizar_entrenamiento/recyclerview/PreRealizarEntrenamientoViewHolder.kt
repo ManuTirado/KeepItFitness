@@ -1,6 +1,7 @@
 package com.iesnervion.keepitfitness.ui.tabEntrenar.pre_realizar_entrenamiento.recyclerview
 
 import android.view.View
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.iesnervion.keepitfitness.R

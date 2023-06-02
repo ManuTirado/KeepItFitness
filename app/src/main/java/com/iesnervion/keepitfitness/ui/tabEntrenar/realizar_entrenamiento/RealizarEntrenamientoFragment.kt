@@ -89,10 +89,9 @@ class RealizarEntrenamientoFragment : Fragment() {
 
     private fun nextExercise() {
         view?.findFocus()?.clearFocus()
+        saveExercise()
         indiceEjercicioActual++
-
-        if (indiceEjercicioActual < entrenamiento.ejercicios.size) {
-            saveExercise()
+        if (indiceEjercicioActual <= entrenamiento.ejercicios.indices.last) {
             displayExercise(entrenamiento.ejercicios[indiceEjercicioActual])
         } else {    // Ha terminado el entrenamiento
             binding.chronometer.stop()
@@ -107,7 +106,7 @@ class RealizarEntrenamientoFragment : Fragment() {
             id = entrenamiento.id,
             desc = entrenamiento.desc,
             time = time,
-            ejercicios = entrenamiento.ejercicios
+            ejercicios = ejerciciosRealizados
         )
         this.entrenamientoRealizado = entrenamientoRealizado
 

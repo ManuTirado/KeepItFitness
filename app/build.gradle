@@ -49,6 +49,9 @@ dependencies {
 
     implementation 'androidx.fragment:fragment-ktx:1.5.5'
 
+    // Splash Screen
+    implementation 'androidx.core:core-splashscreen:1.0.1'
+
     // Material Design
     implementation 'com.google.android.material:material:1.8.0'
 
