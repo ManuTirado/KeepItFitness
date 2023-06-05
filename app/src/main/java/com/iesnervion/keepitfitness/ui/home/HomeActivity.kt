@@ -2,11 +2,14 @@ package com.iesnervion.keepitfitness.ui.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.navigation.NavGraph
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.bumptech.glide.Glide
@@ -127,5 +130,19 @@ class HomeActivity : AppCompatActivity() {
         binding.headerLayout.setOnClickListener {
             navController?.navigate(R.id.action_to_userConfigurationActivity)
         }
+    }
+
+    private var doubleBackToExitPressedOnce = false
+    override fun onBackPressed() {
+        val prueba = this.findNavController(binding.fHome.id)
+        if (doubleBackToExitPressedOnce || prueba.backQueue.count() > 3) {
+            super.getOnBackPressedDispatcher().onBackPressed()
+            return
+        }
+
+        this.doubleBackToExitPressedOnce = true
+        Toast.makeText(this, "Pulsa ATRÁS otra vez para salir", Toast.LENGTH_SHORT).show()
+
+        Handler(Looper.getMainLooper()).postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
     }
 }

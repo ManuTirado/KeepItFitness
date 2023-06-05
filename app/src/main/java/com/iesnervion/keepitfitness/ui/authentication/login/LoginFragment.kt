@@ -38,6 +38,7 @@ class LoginFragment : Fragment() {
         initListeners()
     }
 
+
     /**
      * Inicializa los observadores de los datos de la vista.
      * Se observa el estado del login del viewmodel y se gestiona en función de su valor.
@@ -50,6 +51,7 @@ class LoginFragment : Fragment() {
                     val action =
                         LoginFragmentDirections.actionLoginFragmentToHomeActivity()
                         //LoginFragmentDirections.actionLoginFragmentToHomeFragment(state.data.uid)
+                    requireActivity().finish()
                     findNavController().navigate(action)
                 }
                 is Resource.Error -> {      // Si el login es incorrecto, se muestra un mensaje de error

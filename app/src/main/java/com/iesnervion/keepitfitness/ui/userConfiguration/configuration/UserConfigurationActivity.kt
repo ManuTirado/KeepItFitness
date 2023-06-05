@@ -1,27 +1,29 @@
 package com.iesnervion.keepitfitness.ui.userConfiguration.configuration
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Color
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.CalendarContract.Colors
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.navigation.Navigation
+import androidx.navigation.ActivityNavigator
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.iesnervion.keepitfitness.R
 import com.iesnervion.keepitfitness.databinding.ActivityUserConfigurationBinding
 import com.iesnervion.keepitfitness.domain.model.User
+import com.iesnervion.keepitfitness.ui.MainActivity
 import com.iesnervion.keepitfitness.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class UserConfigurationActivity : AppCompatActivity() {
@@ -231,14 +233,11 @@ class UserConfigurationActivity : AppCompatActivity() {
                 photoPickerLauncher.launch("image/*")
             }
             switchDarkMode.setOnCheckedChangeListener { buttonView, isChecked ->
-
-                Navigation.findNavController(binding.tilIMC)
-
-//                if (isChecked) {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-//                } else {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-//                }
+                if (isChecked) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }
             }
         }
     }
