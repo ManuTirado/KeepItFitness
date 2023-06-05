@@ -61,6 +61,7 @@ class InsertarEditarEntrenamientoFragment : Fragment() {
     }
 
     private fun handleButtonEnable(enable: Boolean) {
+        if (enable) { binding.tvNoExercise.visibility = View.GONE } else { binding.tvNoExercise.visibility = View.VISIBLE }
         binding.bSaveTraining.isEnabled = enable
     }
 
