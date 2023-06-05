@@ -14,6 +14,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.iesnervion.keepitfitness.R
 import com.iesnervion.keepitfitness.databinding.ActivityUserConfigurationBinding
@@ -229,11 +231,14 @@ class UserConfigurationActivity : AppCompatActivity() {
                 photoPickerLauncher.launch("image/*")
             }
             switchDarkMode.setOnCheckedChangeListener { buttonView, isChecked ->
-                if (isChecked) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                }
+
+                Navigation.findNavController(binding.tilIMC)
+
+//                if (isChecked) {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+//                } else {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+//                }
             }
         }
     }
