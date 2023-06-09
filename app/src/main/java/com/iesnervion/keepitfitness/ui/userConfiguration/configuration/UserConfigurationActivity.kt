@@ -221,8 +221,12 @@ class UserConfigurationActivity : AppCompatActivity() {
             }
             bSaveChanges.setOnClickListener {
                 user.username = etUsername.text.toString()
-                user.weight = etWeight.text.toString().toFloat()
-                user.height = etHeight.text.toString().toFloat()
+                if (!etWeight.text.isNullOrEmpty()) {
+                    user.weight = etWeight.text.toString().toFloat()
+                }
+                if (!etHeight.text.isNullOrEmpty()) {
+                    user.height = etHeight.text.toString().toFloat()
+                }
                 if (newImageUri != null) {
                     viewModel.uploadImage(newImageUri!!)
                 } else {
